@@ -1,18 +1,30 @@
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { MDBBootstrapModule, NavbarModule, BsDropdownModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { RoutesModule } from './routes/routes.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RoutesModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NavbarModule
   ],
-  providers: [],
+  providers: [
+    SharedModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

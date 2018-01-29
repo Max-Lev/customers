@@ -1,0 +1,54 @@
+:host {
+    .chip {
+        display: inline-block;
+        height: 32px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, .6);
+        line-height: 32px;
+        padding: 0 12px;
+        border-radius: 16px;
+        background-color: #eceff1;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+        width: 100%;
+    }
+    .chip .close {
+        cursor: pointer;
+        float: right;
+        font-size: 16px;
+        line-height: 32px;
+        padding-left: 8px;
+        -webkit-transition: all .1s linear;
+        transition: all .1s linear;
+    }
+    .close {
+        float: right;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: .5;
+    }
+    .close:focus,
+    .close:hover {
+        color: #000;
+        text-decoration: none;
+        opacity: .75;
+    }
+    .close:not([disabled]):not(.disabled) {
+        cursor: pointer;
+    }
+}
+
+:host {
+    a.btn.orders {
+        position: relative;
+    }
+    .badge.badge-pill {
+        position: absolute;
+        right: -10px;
+        top: -5px;
+    }
+}

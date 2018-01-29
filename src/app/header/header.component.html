@@ -1,0 +1,18 @@
+<section class="container">
+
+  <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark elegant-color-dark scrolling-navbar" [containerInside]="false">
+    <logo>
+      <a class="logo navbar-brand" [routerLink]="['Customers']">
+        <strong>Sagramata</strong>
+      </a>
+    </logo>
+    <links>
+      <ul class="navbar-nav mr-auto">
+        <li *ngFor="let nav of navigationList" class="nav-item waves-light" mdbRippleRadius [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="[nav.route]" [innerText]="nav.route"></a>
+        </li>
+      </ul>
+    </links>
+  </mdb-navbar>
+
+</section>
