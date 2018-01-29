@@ -1,5 +1,4 @@
-<div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" 
-tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-full-height modal-left" role="document">
     <div class="modal-content">
@@ -26,7 +25,8 @@ tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         </ul>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide()" mdbRippleRadius>Close</button>
+        <button (click)="onHide()" type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide()"
+          mdbRippleRadius>Close</button>
         <button type="button" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>
       </div>
     </div>

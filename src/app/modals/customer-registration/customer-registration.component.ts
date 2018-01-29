@@ -20,17 +20,19 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   constructor(private sharedService: SharedService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { };
 
   ngAfterViewInit(): void {
     console.log(this.modal);
-    this.subscription = this.sharedService.customerCreateState$.subscribe((state) => {
-      if (state) {
-        this.modal.show();
-      }
-      return state;
-    });
   }
+
+  openModal() {
+    this.modal.show();
+  };
+
+  onHide() {
+    this.modal.hide();
+    this.sharedService.createCustomer(false);
+  };
 
 }

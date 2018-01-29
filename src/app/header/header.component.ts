@@ -12,16 +12,18 @@ export class HeaderComponent implements OnInit {
 
   navigationList: NavList[] = navList;
 
-  // @ViewChild('basicModal') basicModel: any;
-
   constructor(private sharedService: SharedService) { }
 
   ngOnInit() {
-    //console.log(this.basicModel);
+
   }
 
   createCustomer() {
     this.sharedService.createCustomer(true);
+    // this.sharedService.createCustomer({
+    //   name: 'Registration Modal',
+    //   isOpen: true
+    // });
   };
 
 }
