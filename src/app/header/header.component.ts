@@ -1,5 +1,7 @@
+import { SharedService } from './../shared/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { NavList, navList } from './nav-list';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +11,17 @@ import { NavList, navList } from './nav-list';
 export class HeaderComponent implements OnInit {
 
   navigationList: NavList[] = navList;
-  constructor() { }
+
+  // @ViewChild('basicModal') basicModel: any;
+
+  constructor(private sharedService: SharedService) { }
 
   ngOnInit() {
+    //console.log(this.basicModel);
   }
+
+  createCustomer() {
+    this.sharedService.createCustomer(true);
+  };
 
 }

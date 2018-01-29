@@ -13,10 +13,10 @@ export class AppComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.sharedService.set_LocalStorage_Data();
-    setTimeout(() => {
-      this.sharedService.is_CustomerStorage('Nicky')//(this.sharedService.getLS);
-    }, 1000);
+    // this.sharedService.set_LocalStorage_Data();
+    // setTimeout(() => {
+    //   this.sharedService.is_CustomerStorage('Nicky')//(this.sharedService.getLS);
+    // }, 1000);
   };
 
 }

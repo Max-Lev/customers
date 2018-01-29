@@ -1,19 +1,21 @@
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MDBBootstrapModule, NavbarModule, BsDropdownModule } from 'angular-bootstrap-md';
+import { MDBBootstrapModule, NavbarModule, BsDropdownModule, ModalModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { RoutesModule } from './routes/routes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { CustomerRegistrationComponent } from './modals/customer-registration/customer-registration.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    CustomerRegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -21,10 +23,11 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     RouterModule,
     NavbarModule,
-    SharedModule
+    ModalModule.forRoot(),
+    SharedModule.forRoot()
   ],
   providers: [
-    
+
   ],
   bootstrap: [AppComponent]
 })
