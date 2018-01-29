@@ -20,6 +20,9 @@ export class CustomersComponent implements OnInit {
   };
 
 
+  createCustomer() {
+
+  };
 
 
 }

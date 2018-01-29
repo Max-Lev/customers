@@ -1,3 +1,4 @@
+import { SharedService } from './shared/shared.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,12 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() {
+  constructor(private sharedService: SharedService) {
 
   };
 
   ngOnInit(): void {
-
+    this.sharedService.set_LocalStorage_Data();
+    setTimeout(() => {
+      this.sharedService.is_CustomerStorage('Nicky')//(this.sharedService.getLS);
+    }, 1000);
   };
 
 }

@@ -1,5 +1,5 @@
 import { SharedModule } from './../shared/shared.module';
-import { BsDropdownModule, MDBBootstrapModule } from 'angular-bootstrap-md';
+import { BsDropdownModule, MDBBootstrapModule, ModalModule } from 'angular-bootstrap-md';
 import { Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     SharedModule
   ],
   declarations: [

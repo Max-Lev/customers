@@ -20,10 +20,11 @@ import { SharedModule } from './shared/shared.module';
     RoutesModule,
     ReactiveFormsModule,
     RouterModule,
-    NavbarModule
+    NavbarModule,
+    SharedModule
   ],
   providers: [
-    SharedModule
+    
   ],
   bootstrap: [AppComponent]
 })

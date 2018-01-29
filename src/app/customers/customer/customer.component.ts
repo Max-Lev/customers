@@ -24,13 +24,13 @@ export class CustomerComponent implements OnInit, OnChanges {
     console.log('customer - orders: ', this.customer.Customer_Orders);
   };
 
-  click() {
-    console.log('click');
-  };
+  // click() {
+  //   console.log('click');
+  // };
 
-  selectedOption(name: string, id: number) {
-    console.log(name);
-  };
+  // selectedOption(name: string, id: number) {
+  //   console.log(name);
+  // };
 
 
 }
