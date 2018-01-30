@@ -1,6 +1,5 @@
 <section class="container">
 
-
   <form #orders [formGroup]="customerOrdersForm" novalidate>
     <p class="h5 text-center mb-4">Sign up</p>
 
@@ -31,28 +30,25 @@
     <section formArrayName="orders" *ngFor="let order of ordersList.controls;let i = index;">
 
       <div [formGroupName]="i">
-        x:{{order?.controls[i]}} 
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
-          <input formControlName="product1" type="text" id="orangeForm-email" class="form-control" mdbActive>
-          <label for="orangeForm-email">orders-1</label>
+          <i (click)="removeOrder(i)" class="fa fa-close prefix grey-text remove-product"></i>
+          <input formControlName="product" type="text" id="orangeForm-email" class="form-control" mdbActive>
+          <label for="orangeForm-email">Product</label>
         </div>
-
-        <div class="md-form">
-          <i class="fa fa-envelope prefix grey-text"></i>
-          <input formControlName="product2" type="text" id="orangeForm-email" class="form-control" mdbActive>
-          <label for="orangeForm-email">orders-2</label>
-        </div>
-
       </div>
 
     </section>
 
-    <!-- <section *ngFor="let order of ordersList.controls;let i = index;">
-      order: {{order?.controls[i]?.controls}}
-    </section> -->
+    <div class="text-center">
+      <button [disabled]="!ordersList.valid" (click)="addOrder()" class="btn btn-deep-orange waves-light" mdbRippleRadius>Set Order</button>
+    </div>
 
-    <!-- <section formArrayName="orders">
+  </form>
+
+</section>
+
+<!-- <section formArrayName="orders">
 
       <div formGroupName="0">
 
@@ -71,12 +67,3 @@
       </div>
 
     </section> -->
-
-    <div class="text-center">
-      <button (click)="addOrder()" class="btn btn-deep-orange waves-light" mdbRippleRadius>Sign up</button>
-    </div>
-
-  </form>
-
-
-</section>

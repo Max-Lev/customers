@@ -33,8 +33,7 @@ export class OrdersComponent implements OnInit {
 
   ordersGroupListBuilder(): FormGroup {
     return this.formBuilder.group({
-      product1: 'shoes',
-      product2: 'hats'
+      product: ['', [Validators.required, Validators.minLength(2)]],
     });
   };
 
@@ -44,5 +43,8 @@ export class OrdersComponent implements OnInit {
     console.log('ordersList: ', this.ordersList)
   };
 
+  removeOrder(orderIndex: number) {
+    this.ordersList.removeAt(orderIndex);
+  };
 
 }

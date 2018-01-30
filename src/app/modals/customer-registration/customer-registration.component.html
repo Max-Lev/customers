@@ -32,53 +32,8 @@
         <!-- PHONE -->
 
         <!-- ORDERS -->
-        <section formGroupName="customerOrders">
-          <div class="md-form form-sm">
-            <i class="fa fa fa-phone prefix"></i>
-            <input type="tel" formControlName="order1" mdbActive type="text" id="form19" class="form-control">
-            <label for="form19">Order</label>
-          </div>
-          <div class="md-form form-sm">
-            <i class="fa fa fa-phone prefix"></i>
-            <input type="tel" formControlName="order2" mdbActive type="text" id="form19" class="form-control">
-            <label for="form19">Order</label>
-          </div>
-        </section>
+
         <!-- ORDERS -->
-
-
-        <!-- <div formArrayName="customerAddresses" *ngFor="let address of customerAddressList.controls; let i=index">
-          <div [formGroupName]="i">
-            <div class="form-group">
-              <label class="col-md-2 control-label">Address Type</label>
-              <div class="col-md-8">
-                <label class="radio-inline">
-                  <input type="radio" id="addressType1Id" value="home" formControlName="street1">Home
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" id="addressType1Id" value="work" formControlName="street2">Work
-                </label>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <div *ngFor="let order of Orders.controls;let i = index;">
-
-        </div>
-
-        <!-- Orders: {{this.customerRegistration.get('Orders').controls[0].get('order1')}} -->
-        <section formArrayName="Orders" formGroupName="Orders">
-          <div class="md-form form-sm">
-            <i class="fa fa fa-phone prefix"></i>
-            <input type="tel" formControlName="order1" mdbActive type="text" id="form19" class="form-control">
-            <label for="form19">Order</label>
-          </div>
-        </section>
-
-        <section>
-          <button (click)="addCustomerOrder()" type="button" class="btn btn-primary waves-light" data-dismiss="modal" mdbRippleRadius>Add Order</button>
-        </section>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente magnam, sunt, ea dolore eum quod. Minima fugiat
           enim aut soluta est reprehenderit reiciendis quos, qui, amet possimus laborum assumenda voluptate.
