@@ -57,6 +57,7 @@ export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterConte
     });
 
   };
+   
 
 
 }
