@@ -1,10 +1,122 @@
-<div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-full-height modal-left" role="document">
+<div style="border:1px solid red;max-height:85%;" mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight"
+  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <form #customerForm (ngSubmit)="saveCustomer()" [formGroup]="customerRegistration" class="modal-dialog modal-full-height modal-right"
+    role="document" novalidate>
+
+    <section class="modal-content">
+
+      <section class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Customer Registration</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onHide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </section>
+
+      <section class="modal-body">
+
+        <!-- NAME -->
+        <div class="md-form form-sm">
+          <i class="fa fa fa-user prefix"></i>
+          <input formControlName="customerName" mdbActive type="text" id="form19" class="form-control">
+          <label for="form19">Customer Name</label>
+        </div>
+        <!-- NAME -->
+
+        <!-- PHONE -->
+        <div class="md-form form-sm">
+          <i class="fa fa fa-phone prefix"></i>
+          <input type="tel" formControlName="customerPhone" mdbActive type="text" id="form19" class="form-control">
+          <label for="form19">Tel</label>
+        </div>
+        <!-- PHONE -->
+
+        <!-- ORDERS -->
+        <section formGroupName="customerOrders">
+          <div class="md-form form-sm">
+            <i class="fa fa fa-phone prefix"></i>
+            <input type="tel" formControlName="order1" mdbActive type="text" id="form19" class="form-control">
+            <label for="form19">Order</label>
+          </div>
+          <div class="md-form form-sm">
+            <i class="fa fa fa-phone prefix"></i>
+            <input type="tel" formControlName="order2" mdbActive type="text" id="form19" class="form-control">
+            <label for="form19">Order</label>
+          </div>
+        </section>
+        <!-- ORDERS -->
+
+
+        <!-- <div formArrayName="customerAddresses" *ngFor="let address of customerAddressList.controls; let i=index">
+          <div [formGroupName]="i">
+            <div class="form-group">
+              <label class="col-md-2 control-label">Address Type</label>
+              <div class="col-md-8">
+                <label class="radio-inline">
+                  <input type="radio" id="addressType1Id" value="home" formControlName="street1">Home
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" id="addressType1Id" value="work" formControlName="street2">Work
+                </label>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div *ngFor="let order of Orders.controls;let i = index;">
+
+        </div>
+
+        <!-- Orders: {{this.customerRegistration.get('Orders').controls[0].get('order1')}} -->
+        <section formArrayName="Orders" formGroupName="Orders">
+          <div class="md-form form-sm">
+            <i class="fa fa fa-phone prefix"></i>
+            <input type="tel" formControlName="order1" mdbActive type="text" id="form19" class="form-control">
+            <label for="form19">Order</label>
+          </div>
+        </section>
+
+        <section>
+          <button (click)="addCustomerOrder()" type="button" class="btn btn-primary waves-light" data-dismiss="modal" mdbRippleRadius>Add Order</button>
+        </section>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente magnam, sunt, ea dolore eum quod. Minima fugiat
+          enim aut soluta est reprehenderit reiciendis quos, qui, amet possimus laborum assumenda voluptate.
+        </p>
+        <ul class="list-group z-depth-0">
+          <li class="list-group-item justify-content-between">
+            Cras justo odio
+            <span class="badge badge-primary badge-pill">14</span>
+          </li>
+          <li class="list-group-item justify-content-between">
+            Dapibus ac facilisis in
+            <span class="badge badge-primary badge-pill">2</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="modal-footer justify-content-center">
+        <button (click)="onHide()" type="button" class="btn btn-primary waves-light" data-dismiss="modal" (click)="fluid.hide()"
+          mdbRippleRadius>Close</button>
+        <button type="submit" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>
+      </section>
+
+    </section>
+
+
+  </form>
+
+</div>
+
+
+
+<!-- <div style="border:1px solid red;max-height:50%;" mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-full-height modal-right" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
+        <h4 class="modal-title w-100" id="myModalLabel">Customer Registration</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onHide()">
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -27,8 +139,8 @@
       <div class="modal-footer justify-content-center">
         <button (click)="onHide()" type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide()"
           mdbRippleRadius>Close</button>
-        <button type="button" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>
+        <button (click)="save()" type="button" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>
       </div>
     </div>
   </div>
-</div>
+</div>  -->

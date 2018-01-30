@@ -1,3 +1,82 @@
-<p>
-  orders works!
-</p>
+<section class="container">
+
+
+  <form #orders [formGroup]="customerOrdersForm" novalidate>
+    <p class="h5 text-center mb-4">Sign up</p>
+
+    <div class="md-form">
+      <i class="fa fa-user prefix grey-text"></i>
+      <input formControlName="name" type="text" id="orangeForm-name" class="form-control" mdbActive>
+      <label for="orangeForm-name">Your name</label>
+    </div>
+    <div class="md-form">
+      <i class="fa fa-envelope prefix grey-text"></i>
+      <input formControlName="lastName" type="text" id="orangeForm-email" class="form-control" mdbActive>
+      <label for="orangeForm-email">Last Name</label>
+    </div>
+
+    <section formGroupName="address">
+      <div class="md-form">
+        <i class="fa fa-envelope prefix grey-text"></i>
+        <input formControlName="city" type="text" id="orangeForm-email" class="form-control" mdbActive>
+        <label for="orangeForm-email">city</label>
+      </div>
+      <div class="md-form">
+        <i class="fa fa-envelope prefix grey-text"></i>
+        <input formControlName="location" type="text" id="orangeForm-email" class="form-control" mdbActive>
+        <label for="orangeForm-email">location</label>
+      </div>
+    </section>
+
+    <section formArrayName="orders" *ngFor="let order of ordersList.controls;let i = index;">
+
+      <div [formGroupName]="i">
+        x:{{order?.controls[i]}} 
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input formControlName="product1" type="text" id="orangeForm-email" class="form-control" mdbActive>
+          <label for="orangeForm-email">orders-1</label>
+        </div>
+
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input formControlName="product2" type="text" id="orangeForm-email" class="form-control" mdbActive>
+          <label for="orangeForm-email">orders-2</label>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- <section *ngFor="let order of ordersList.controls;let i = index;">
+      order: {{order?.controls[i]?.controls}}
+    </section> -->
+
+    <!-- <section formArrayName="orders">
+
+      <div formGroupName="0">
+
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input formControlName="product1" type="text" id="orangeForm-email" class="form-control" mdbActive>
+          <label for="orangeForm-email">orders-1</label>
+        </div>
+
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input formControlName="product2" type="text" id="orangeForm-email" class="form-control" mdbActive>
+          <label for="orangeForm-email">orders-2</label>
+        </div>
+
+      </div>
+
+    </section> -->
+
+    <div class="text-center">
+      <button (click)="addOrder()" class="btn btn-deep-orange waves-light" mdbRippleRadius>Sign up</button>
+    </div>
+
+  </form>
+
+
+</section>

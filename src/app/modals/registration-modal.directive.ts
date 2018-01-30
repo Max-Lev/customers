@@ -6,8 +6,6 @@ import { ViewContainerRef } from '@angular/core';
 })
 export class RegistrationModalDirective {
 
-  constructor(public viewContainerRef: ViewContainerRef) {
-    console.log(viewContainerRef)
-   };
+  constructor(public viewContainerRef: ViewContainerRef) { };
 
 }

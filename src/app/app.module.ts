@@ -8,18 +8,13 @@ import { HeaderComponent } from './header/header.component';
 import { RoutesModule } from './routes/routes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
-import { CustomerRegistrationComponent } from './modals/customer-registration/customer-registration.component';
-import { ModalComponent } from './modals/modal/modal.component';
-import { RegistrationModalDirective } from './modals/registration-modal.directive';
+import { ModalsModule } from './modals/modals.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    CustomerRegistrationComponent,
-    ModalComponent,
-    RegistrationModalDirective,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -27,13 +22,12 @@ import { RegistrationModalDirective } from './modals/registration-modal.directiv
     ReactiveFormsModule,
     RouterModule,
     NavbarModule,
-    ModalModule.forRoot(),
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+    ModalsModule
   ],
   providers: [
 
   ],
-  entryComponents: [CustomerRegistrationComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

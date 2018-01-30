@@ -4,19 +4,22 @@ import { ICustomer } from '../models/customer.model';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { IActiveModal, CUSTOMER_REGISTRATION } from '../models/modal.model';
 
 @Injectable()
 export class SharedService {
 
-  public customerCreateState$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  constructor() {
-
+  public customerModal: IActiveModal = {
+    isOpen: false,
+    modalName: CUSTOMER_REGISTRATION
   };
+  public customerModalState$: BehaviorSubject<IActiveModal> = new BehaviorSubject<IActiveModal>(this.customerModal);
 
-  createCustomer(state: boolean) {
+  constructor() { };
+
+  set_customersModalState$(state: IActiveModal) {
     console.log('create customer');
-    this.customerCreateState$.next(state);
+    this.customerModalState$.next(state);
   };
 
 

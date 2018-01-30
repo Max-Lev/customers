@@ -1,3 +1,5 @@
+import { ModalDirective } from 'angular-bootstrap-md';
+import { Observable } from 'rxjs/Observable';
 import { SharedService } from './../../shared/shared.service';
 import { Subscription } from 'rxjs/Subscription';
 import { CustomerRegistrationComponent } from './../customer-registration/customer-registration.component';
@@ -7,24 +9,29 @@ import {
   Component, OnInit, ViewContainerRef, ComponentFactoryResolver
 } from '@angular/core';
 import { AfterViewInit, AfterContentInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { IActiveModal } from '../../models/modal.model';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  selector: 'app-modals-manager',
+  templateUrl: './modals-manager.component.html',
+  styleUrls: ['./modals-manager.component.scss']
 })
-export class ModalComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   subscription: Subscription;
 
   @ViewChild(RegistrationModalDirective) _RegistrationModalDirective: RegistrationModalDirective;
 
-  componentRef: ComponentRef<any>;
+  componentRef: ComponentRef<CustomerRegistrationComponent | any>;
+
+  @ViewChild(ModalDirective) modal: ModalDirective;
 
   constructor(private sharedService: SharedService, private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver) { };
 
-  ngOnInit() { };
+  ngOnInit() {
+
+  };
 
   ngAfterContentInit(): void { };
 
@@ -34,11 +41,12 @@ export class ModalComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   modalState$() {
 
-    this.subscription = this.sharedService.customerCreateState$.subscribe((state) => {
-      if (state) {
+    this.subscription = this.sharedService.customerModalState$.subscribe((state: IActiveModal) => {
+      // debugger;
+      if (state.isOpen) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CustomerRegistrationComponent);
         this.componentRef = this._RegistrationModalDirective.viewContainerRef.createComponent(componentFactory);
-        console.log(this.componentRef);
+        // console.log(this.componentRef);
         setTimeout(() => {
           const _component = (<CustomerRegistrationComponent>this.componentRef.instance).openModal();
         }, 0);
@@ -47,10 +55,8 @@ export class ModalComponent implements OnInit, AfterViewInit, AfterContentInit {
       }
       return state;
     });
+
   };
-
-
-
 
 
 }
