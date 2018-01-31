@@ -1,15 +1,14 @@
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { SharedService } from './../../shared/shared.service';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, ContentChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Query } from '@angular/compiler/src/core';
-import { ContentChild } from '@angular/core';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { CUSTOMER_REGISTRATION } from '../../models/modal.model';
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-
-
+import 'rxjs/add/observable/of';
 @Component({
   selector: 'app-customer-registration',
   templateUrl: './customer-registration.component.html',
@@ -20,103 +19,105 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   subscription: Subscription;
 
-  @ViewChild(ModalDirective) modal: ModalDirective;
+  customerRegistrationForm: FormGroup;
 
-  customerRegistration: FormGroup;
+  @ViewChild('modalContainer') modalContainer: ModalDirective;
 
-  // orders: Array<string> = new Array(4);
+  @ViewChild(ModalDirective) mdbModal: ModalDirective;
 
-  constructor(private sharedService: SharedService, private formBuilder: FormBuilder) { }
+  ordersList: FormArray;
+
+  ordersListCounter$: Subject<number> = new Subject();
+
+  constructor(public viewContainerRef: ViewContainerRef,
+    private ref: ChangeDetectorRef, private sharedService: SharedService,
+    private formBuilder: FormBuilder) {
+    this.registrationFormBuilder();
+  };
 
   ngOnInit() {
-    this.modalConfig();
-    this.buildRegistrationForm();
+    this.customerRegistrationModalState$();
   };
 
-  ngAfterViewInit(): void { };
+  ngAfterViewInit(): void {
+    console.log(this.customerRegistrationForm);
+    this.ordersCounter$();
+  };
 
-  buildRegistrationForm() {
-
-    this.customerRegistration = this.formBuilder.group({
-      customerName: new FormControl('max', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
-      customerPhone: new FormControl('0739257517', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
-
-      customerOrders: this.formBuilder.group({
-        order1: new FormControl('Pents'),
-        order2: new FormControl('Shoes'),
-      }),
-      Orders: this.formBuilder.array([this.buildCustomerOrders_FormGroup()])
-      // customerAddresses: this.formBuilder.array([this.buildAddress()])
+  registrationFormBuilder() {
+    this.customerRegistrationForm = this.formBuilder.group({
+      customerName: ['max', [
+        Validators.required, Validators.minLength(2)
+      ]],
+      customerEmail: ['max@gmail.com', [
+        Validators.required
+      ]],
+      customerPhone: ['0545969609', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(10)
+      ]],
+      orders: this.formBuilder.array([this.ordersFormGroupBuilder()])
     });
-
-    this.Orders = <FormArray>this.customerRegistration.get('Orders');
-    console.log('this.Orders: ', this.Orders.controls[0]['controls'])
-    this.Orders = this.Orders.controls[0]['controls'];
+    this.getOrdersList();
   };
 
-  addCustomerOrder() {
-
+  getOrdersList() {
+    this.ordersList = <FormArray>this.customerRegistrationForm.get('orders');
   };
 
-  buildCustomerOrders_FormGroup(): FormGroup {
-
-    console.log(this.customerRegistration)
+  ordersFormGroupBuilder(): FormGroup {
     return this.formBuilder.group({
-      order1: 'NY',
-      order2: 'Berlin',
+      product: ['', [Validators.required]]
     });
   };
 
-  // tslint:disable-next-line:member-ordering
-  Orders: FormArray;
+  addOrder() {
+    this.ordersListCounter$.next(this.ordersList.length);
+    this.ordersList.push(this.ordersFormGroupBuilder());
+  };
 
-  // get Orders(): FormArray {
-  //   console.log(this.customerRegistration)
-  //   debugger;
-  //   return <FormArray>this.customerRegistration.get('Orders');
-  // };
+  removeOrder(orderIndex: number) {
+    this.ordersListCounter$.next(this.ordersList.length);
+    this.ordersList.removeAt(orderIndex);
+  };
 
+  ordersCounter$() {
+    this.subscription = this.ordersListCounter$.subscribe((counter) => {
+      const ordersCountState = (this.ordersList.length <= this.ordersListSize) ? this.ordersList.enable() : this.ordersList.disable();
+    });
+  };
 
-  // buildAddress(): FormGroup {
-  //   return this.formBuilder.group({
-  //     street2: 'home',
-  //     street1: '',
-  //   });
-  // }
-  // get customerAddressList(): FormArray {
-  //   return <FormArray>this.customerRegistration.get('customerAddresses');
-  // };
-  // // click event
-  // addAddress(): void {
-  //   this.customerAddressList.push(this.buildAddress());
-  // };
-
-
+  get ordersListSize() {
+    return 3;
+  };
 
   saveCustomer() {
-    if (this.customerRegistration.valid) {
-      this.customerRegistration;
+    if (this.customerRegistrationForm.valid) {
       debugger;
-    }
-    else {
-      this.customerRegistration;
+    } else {
       debugger;
     }
   };
 
-  openModal() {
-    this.modal.show();
+  customerRegistrationModalState$() {
+    this.mdbModal.onHide.subscribe((state) => {
+      this.sharedService.set_customersModalState$({ isOpen: false, modalName: CUSTOMER_REGISTRATION })
+    });
+    this.mdbModal.onShow.subscribe((state) => { });
   };
 
-  onHide() {
-    this.modal.hide();
-    this.sharedService.set_customersModalState$({ isOpen: false, modalName: CUSTOMER_REGISTRATION });
+  public hideModal() {
+    this.ref.detectChanges();
+    this.mdbModal.hide();
   };
 
-  modalConfig() {
-    this.modal.config = {
-      ignoreBackdropClick: true
-    };
+  public showModal() {
+    this.ref.detectChanges();
+    this.mdbModal.show();
   };
+
+
+
 
 };

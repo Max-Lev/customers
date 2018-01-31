@@ -3,7 +3,7 @@
   <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark elegant-color-dark scrolling-navbar" [containerInside]="false">
     <logo>
       <a class="logo navbar-brand" [routerLink]="['Customers']">
-        <strong>Sagramata</strong>
+        <strong>Customers Service</strong>
       </a>
     </logo>
     <links>
@@ -14,16 +14,10 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item waves-light" mdbRippleRadius>
-          <a (click)="createCustomer()" class="nav-link " [innerText]=" 'Customer +' "></a>
+          <a (click)="openCustomerRegistrationForm()" class="nav-link " [innerText]=" 'Customer +' "></a>
         </li>
       </ul>
     </links>
   </mdb-navbar>
 
 </section>
-
-
-
-
-
-

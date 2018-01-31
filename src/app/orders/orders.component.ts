@@ -30,7 +30,7 @@ export class OrdersComponent implements OnInit {
     });
     this.ordersList = <FormArray>this.customerOrdersForm.get('orders');
   };
-
+ 
   ordersGroupListBuilder(): FormGroup {
     return this.formBuilder.group({
       product: ['', [Validators.required, Validators.minLength(2)]],

@@ -7,6 +7,7 @@ import { OrdersRegistrationComponent } from './orders-registration/orders-regist
 import { ModalModule, ActiveModule } from 'angular-bootstrap-md';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RegistrationModalContainerComponent } from './registration-modal-container/registration-modal-container.component';
 
 @NgModule({
   imports: [
@@ -22,8 +23,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ModalsManagerComponent,
     RegistrationModalDirective,
     OrdersRegistrationComponent,
+    RegistrationModalContainerComponent,
   ],
-  entryComponents: [CustomerRegistrationComponent],
-  exports: [ModalsManagerComponent]
+  entryComponents: [CustomerRegistrationComponent, OrdersRegistrationComponent],
+  exports: [ModalsManagerComponent, RegistrationModalContainerComponent]
 })
 export class ModalsModule { }

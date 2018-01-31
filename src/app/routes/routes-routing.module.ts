@@ -9,8 +9,8 @@ const routes: Routes = [
     path: 'Orders', loadChildren: './../orders/orders.module#OrdersModule'
   },
   {
-    // path: '**', pathMatch: 'full', redirectTo: 'Customers'
-    path: '**', pathMatch: 'full', redirectTo: 'Orders'
+    path: '**', pathMatch: 'full', redirectTo: 'Customers'
+    // path: '**', pathMatch: 'full', redirectTo: 'Orders'
   }
 ];
 

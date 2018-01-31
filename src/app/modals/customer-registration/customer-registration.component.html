@@ -1,101 +1,77 @@
-<div style="border:1px solid red;max-height:85%;" mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight"
-  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form [formGroup]="customerRegistrationForm" (ngSubmit)="saveCustomer()" mdbModal #fluid="mdb-modal" class="modal fade right"
+    id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-  <form #customerForm (ngSubmit)="saveCustomer()" [formGroup]="customerRegistration" class="modal-dialog modal-full-height modal-right"
-    role="document" novalidate>
+    <section class="modal-dialog modal-full-height modal-right" role="document">
 
-    <section class="modal-content">
 
-      <section class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">Customer Registration</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onHide()">
-          <span aria-hidden="true">×</span>
-        </button>
-      </section>
+        <!--Content-->
+        <section class="modal-content">
 
-      <section class="modal-body">
+            <!--Header-->
+            <section class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Customer Registration</h4>
+                <button (click)="hideModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </section>
+            <!--Body-->
+            <section class="modal-body mb-0">
 
-        <!-- NAME -->
-        <div class="md-form form-sm">
-          <i class="fa fa fa-user prefix"></i>
-          <input formControlName="customerName" mdbActive type="text" id="form19" class="form-control">
-          <label for="form19">Customer Name</label>
-        </div>
-        <!-- NAME -->
+                <!-- NAME -->
+                <div class="md-form form-sm">
+                    <i class="fa fa fa-user prefix"></i>
+                    <input formControlName="customerName" mdbActive type="text" id="form19" class="form-control">
+                    <label for="form19">Customer Name</label>
+                </div>
+                <!-- NAME -->
 
-        <!-- PHONE -->
-        <div class="md-form form-sm">
-          <i class="fa fa fa-phone prefix"></i>
-          <input type="tel" formControlName="customerPhone" mdbActive type="text" id="form19" class="form-control">
-          <label for="form19">Tel</label>
-        </div>
-        <!-- PHONE -->
+                <!-- EMAIL -->
+                <div class="md-form form-sm">
+                    <i class="fa fa-envelope-open-o prefix"></i>
+                    <input formControlName="customerEmail" mdbActive type="email" id="form20" class="form-control">
+                    <label for="form20">Your email</label>
+                </div>
+                <!-- EMAIL -->
 
-        <!-- ORDERS -->
+                <!-- PHONE -->
+                <div class="md-form form-sm">
+                    <i class="fa fa-phone prefix"></i>
+                    <input type="text" formControlName="customerPhone" mdbActive type="text" id="category" class="form-control">
+                    <label for="category">Tel</label>
+                </div>
+                <!-- PHONE -->
 
-        <!-- ORDERS -->
+                <!-- ORDERS -->
+                <section formArrayName="orders" *ngFor="let order of ordersList.controls;let i = index;">
+                    <section [formGroupName]="i">
+                        <div class="md-form form-sm">
+                            <i class="fa fa-product-hunt prefix"></i>
+                            <button (click)="removeOrder(i)" type="button" class="close remove-product" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <input formControlName="product" mdbActive type="text" id="" class="form-control">
+                            <label for="">Product</label>
+                        </div>
+                    </section>
+                </section>
+                <!-- ORDERS -->
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente magnam, sunt, ea dolore eum quod. Minima fugiat
-          enim aut soluta est reprehenderit reiciendis quos, qui, amet possimus laborum assumenda voluptate.
-        </p>
-        <ul class="list-group z-depth-0">
-          <li class="list-group-item justify-content-between">
-            Cras justo odio
-            <span class="badge badge-primary badge-pill">14</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Dapibus ac facilisis in
-            <span class="badge badge-primary badge-pill">2</span>
-          </li>
-        </ul>
-      </section>
+                <div class="text-center">
+                    <button [disabled]="!ordersList.valid || (ordersList.length >= ordersListSize)" (click)="addOrder()" type="button" class="btn btn-deep-orange waves-light"
+                        mdbRippleRadius>Set Order</button>
+                </div>
 
-      <section class="modal-footer justify-content-center">
-        <button (click)="onHide()" type="button" class="btn btn-primary waves-light" data-dismiss="modal" (click)="fluid.hide()"
-          mdbRippleRadius>Close</button>
-        <button type="submit" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>
-      </section>
+            </section>
+            <!-- BODY -->
+
+            <div class="modal-footer ml-auto mr-auto">
+                <button (click)="hideModal()" type="button" class="btn btn-primary red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>
+                <button type="submit" class="btn btn-primary amber darken-4 relative waves-light" mdbRippleRadius>Save changes</button>
+            </div>
+
+        </section>
+        <!--/.Content-->
 
     </section>
 
-
-  </form>
-
-</div>
-
-
-
-<!-- <div style="border:1px solid red;max-height:50%;" mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog"
-  aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-full-height modal-right" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">Customer Registration</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onHide()">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente magnam, sunt, ea dolore eum quod. Minima fugiat
-          enim aut soluta est reprehenderit reiciendis quos, qui, amet possimus laborum assumenda voluptate.
-        </p>
-
-        <ul class="list-group z-depth-0">
-          <li class="list-group-item justify-content-between">
-            Cras justo odio
-            <span class="badge badge-primary badge-pill">14</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Dapibus ac facilisis in
-            <span class="badge badge-primary badge-pill">2</span>
-          </li>
-        </ul>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button (click)="onHide()" type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide()"
-          mdbRippleRadius>Close</button>
-        <button (click)="save()" type="button" class="btn btn-primary waves-light" mdbRippleRadius>Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>  -->
+</form>

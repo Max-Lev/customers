@@ -1,3 +1,4 @@
+import { ModalsModule } from './../modals/modals.module';
 import { SharedService } from './../shared/shared.service';
 import { BsDropdownModule, MDBBootstrapModule, ModalModule } from 'angular-bootstrap-md';
 import { Routes } from '@angular/router';
@@ -20,7 +21,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    SharedModule
+    SharedModule,
+    ModalsModule
   ],
   declarations: [
     CustomersComponent,

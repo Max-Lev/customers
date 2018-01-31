@@ -1,0 +1,28 @@
+<button type="button" class="btn btn-primary relative waves-light" (click)="modalContainer.show()" mdbRippleRadius>Launch demo modal</button>
+
+<div mdbModal #modalContainer="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: false}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalContainer.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+      </div>
+
+
+      <div class="modal-body">
+
+        <ng-template appRegistrationModal></ng-template>
+
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="modalContainer.hide()" mdbRippleRadius>Close</button>
+        <button type="button" class="btn btn-primary relative waves-light" mdbRippleRadius>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

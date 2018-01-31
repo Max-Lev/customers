@@ -22,12 +22,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.sharedService.customerModalState$.subscribe((state) => {
       console.log(state);
     });
-    setTimeout(() => {
-      // this.createCustomer();
-    }, 0);
+    // setTimeout(() => {
+      this.openCustomerRegistrationForm();
+    // }, 0);
   };
 
-  createCustomer() {
+  openCustomerRegistrationForm() {
     const activeComponent: IActiveModal = {
       isOpen: true,
       modalName: CUSTOMER_REGISTRATION

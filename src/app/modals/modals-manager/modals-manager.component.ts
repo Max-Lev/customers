@@ -6,10 +6,11 @@ import { CustomerRegistrationComponent } from './../customer-registration/custom
 import { RegistrationModalDirective } from './../registration-modal.directive';
 import {
   ViewChild, TemplateRef, ComponentRef, ContentChild,
-  Component, OnInit, ViewContainerRef, ComponentFactoryResolver
+  Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
+  AfterViewInit, AfterContentInit, ChangeDetectorRef
 } from '@angular/core';
-import { AfterViewInit, AfterContentInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { IActiveModal } from '../../models/modal.model';
+
+import { IActiveModal, CUSTOMER_REGISTRATION } from '../../models/modal.model';
 
 @Component({
   selector: 'app-modals-manager',
@@ -20,44 +21,45 @@ export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterConte
 
   subscription: Subscription;
 
-  @ViewChild(RegistrationModalDirective) _RegistrationModalDirective: RegistrationModalDirective;
+  @ViewChild(RegistrationModalDirective) registrationModalDirective: RegistrationModalDirective;
 
-  componentRef: ComponentRef<CustomerRegistrationComponent | any>;
-
-  @ViewChild(ModalDirective) modal: ModalDirective;
+  customerRegistrationCompInstance: ComponentRef<CustomerRegistrationComponent>;
 
   constructor(private sharedService: SharedService, private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver) { };
+    private ref: ChangeDetectorRef, private componentFactoryResolver: ComponentFactoryResolver) { };
 
-  ngOnInit() {
-
-  };
+  ngOnInit() { };
 
   ngAfterContentInit(): void { };
 
   ngAfterViewInit(): void {
-    this.modalState$();
+    this.customerRegistrationModal$();
   };
 
-  modalState$() {
+  setCustomerRegistration() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CustomerRegistrationComponent);
+    this.customerRegistrationCompInstance = this.registrationModalDirective.viewContainerRef.createComponent(componentFactory);
+    this.customerRegistrationCompInstance.instance.showModal();
+  };
 
+  customerRegistrationModal$() {
     this.subscription = this.sharedService.customerModalState$.subscribe((state: IActiveModal) => {
-      // debugger;
-      if (state.isOpen) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CustomerRegistrationComponent);
-        this.componentRef = this._RegistrationModalDirective.viewContainerRef.createComponent(componentFactory);
-        // console.log(this.componentRef);
-        setTimeout(() => {
-          const _component = (<CustomerRegistrationComponent>this.componentRef.instance).openModal();
-        }, 0);
-      } else {
-        this._RegistrationModalDirective.viewContainerRef.clear();
+
+      if (state.modalName === CUSTOMER_REGISTRATION) {
+        if (state.isOpen) {
+          this.setCustomerRegistration();
+        } else {
+          setTimeout(() => {
+            this.registrationModalDirective.viewContainerRef.clear();
+          }, 500);
+        }
       }
-      return state;
+
     });
-
   };
-   
 
 
-}
+
+
+
+};
