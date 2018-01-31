@@ -20,7 +20,8 @@
                 <!-- NAME -->
                 <div class="md-form form-sm">
                     <i class="fa fa fa-user prefix"></i>
-                    <input formControlName="customerName" mdbActive type="text" id="form19" class="form-control">
+                    <input formControlName="customerName" autocomplete="false"
+                    mdbActive type="text" id="form19" class="form-control">
                     <label for="form19">Customer Name</label>
                 </div>
                 <!-- NAME -->
@@ -28,7 +29,7 @@
                 <!-- EMAIL -->
                 <div class="md-form form-sm">
                     <i class="fa fa-envelope-open-o prefix"></i>
-                    <input formControlName="customerEmail" mdbActive type="email" id="form20" class="form-control">
+                    <input formControlName="customerEmail" mdbActive type="email" autocomplete="false" id="form20" class="form-control">
                     <label for="form20">Your email</label>
                 </div>
                 <!-- EMAIL -->
@@ -36,7 +37,7 @@
                 <!-- PHONE -->
                 <div class="md-form form-sm">
                     <i class="fa fa-phone prefix"></i>
-                    <input type="text" formControlName="customerPhone" mdbActive type="text" id="category" class="form-control">
+                    <input type="text" formControlName="customerPhone" mdbActive autocomplete="false" type="text" id="category" class="form-control">
                     <label for="category">Tel</label>
                 </div>
                 <!-- PHONE -->
@@ -49,7 +50,7 @@
                             <button (click)="removeOrder(i)" type="button" class="close remove-product" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <input formControlName="product" mdbActive type="text" id="" class="form-control">
+                            <input formControlName="product" mdbActive autocomplete="false" type="text" id="" class="form-control">
                             <label for="">Product</label>
                         </div>
                     </section>
@@ -60,6 +61,8 @@
                     <button [disabled]="!ordersList.valid || (ordersList.length >= ordersListSize)" (click)="addOrder()" type="button" class="btn btn-deep-orange waves-light"
                         mdbRippleRadius>Set Order</button>
                 </div>
+
+                customerRegistrationForm {{this.customerRegistrationForm?.value?.customerEmail}}
 
             </section>
             <!-- BODY -->

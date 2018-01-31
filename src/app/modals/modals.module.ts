@@ -1,3 +1,4 @@
+import { CustomerBuilderService } from './services/customer-builder.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
@@ -24,6 +25,9 @@ import { RegistrationModalContainerComponent } from './registration-modal-contai
     RegistrationModalDirective,
     OrdersRegistrationComponent,
     RegistrationModalContainerComponent,
+  ],
+  providers: [
+    CustomerBuilderService
   ],
   entryComponents: [CustomerRegistrationComponent, OrdersRegistrationComponent],
   exports: [ModalsManagerComponent, RegistrationModalContainerComponent]

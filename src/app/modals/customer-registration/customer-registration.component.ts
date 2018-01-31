@@ -4,11 +4,12 @@ import { SharedService } from './../../shared/shared.service';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, ContentChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Query } from '@angular/compiler/src/core';
-import { ModalDirective } from 'angular-bootstrap-md';
+import { ModalDirective, ActiveDirective } from 'angular-bootstrap-md';
 import { CUSTOMER_REGISTRATION } from '../../models/modal.model';
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import 'rxjs/add/observable/of';
+import { CustomerBuilderService } from '../services/customer-builder.service';
+import { ViewChildren } from '@angular/core';
+import { QueryList } from '@angular/core';
 @Component({
   selector: 'app-customer-registration',
   templateUrl: './customer-registration.component.html',
@@ -23,13 +24,15 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalContainer') modalContainer: ModalDirective;
 
+  @ViewChildren(ActiveDirective) mdbActiveList: QueryList<ActiveDirective>;
+
   @ViewChild(ModalDirective) mdbModal: ModalDirective;
 
   ordersList: FormArray;
 
   ordersListCounter$: Subject<number> = new Subject();
 
-  constructor(public viewContainerRef: ViewContainerRef,
+  constructor(public viewContainerRef: ViewContainerRef, private customerBuilderService: CustomerBuilderService,
     private ref: ChangeDetectorRef, private sharedService: SharedService,
     private formBuilder: FormBuilder) {
     this.registrationFormBuilder();
@@ -41,18 +44,22 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log(this.customerRegistrationForm);
+    console.log('mdbActiveList: ', this.mdbActiveList)
     this.ordersCounter$();
   };
 
   registrationFormBuilder() {
     this.customerRegistrationForm = this.formBuilder.group({
-      customerName: ['max', [
+      // customerName: ['max', [
+      customerName: ['', [
         Validators.required, Validators.minLength(2)
       ]],
-      customerEmail: ['max@gmail.com', [
+      // customerEmail: ['max@gmail.com', [
+      customerEmail: ['', [
         Validators.required
       ]],
-      customerPhone: ['0545969609', [
+      // customerPhone: ['0545969609', [
+      customerPhone: ['', [
         Validators.required,
         Validators.minLength(10),
         Validators.maxLength(10)
@@ -68,7 +75,10 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   ordersFormGroupBuilder(): FormGroup {
     return this.formBuilder.group({
-      product: ['', [Validators.required]]
+      product: ['', [Validators.required]],
+      // product2: ['', [Validators.required]]
+      // product: ['Shoes', [Validators.required]],
+      // product2: ['TV', [Validators.required]]
     });
   };
 
@@ -94,10 +104,26 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   saveCustomer() {
     if (this.customerRegistrationForm.valid) {
-      debugger;
+      // tslint:disable-next-line:no-unused-expression
+      this.customerBuilderService.getRegistrationData(this.customerRegistrationForm.value);
+
+      // this.customerRegistrationForm.reset({
+      //   customerName: null,
+      //   customerEmail: '',
+      //   customerPhone: '',
+      //   orders: []
+      // });
+      this.reset_form_mdbActive();
+
     } else {
       debugger;
     }
+  };
+
+  reset_form_mdbActive() {
+    this.customerRegistrationForm.reset({});
+    this.registrationFormBuilder();
+    this.mdbActiveList.map(el => el.onBlur());
   };
 
   customerRegistrationModalState$() {
