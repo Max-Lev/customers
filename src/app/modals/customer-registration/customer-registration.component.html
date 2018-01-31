@@ -3,7 +3,6 @@
 
     <section class="modal-dialog modal-full-height modal-right" role="document">
 
-
         <!--Content-->
         <section class="modal-content">
 
@@ -20,8 +19,7 @@
                 <!-- NAME -->
                 <div class="md-form form-sm">
                     <i class="fa fa fa-user prefix"></i>
-                    <input formControlName="customerName" autocomplete="false"
-                    mdbActive type="text" id="form19" class="form-control">
+                    <input formControlName="customerName" autocomplete="false" mdbActive type="text" id="form19" class="form-control">
                     <label for="form19">Customer Name</label>
                 </div>
                 <!-- NAME -->
@@ -43,7 +41,9 @@
                 <!-- PHONE -->
 
                 <!-- ORDERS -->
-                <section formArrayName="orders" *ngFor="let order of ordersList.controls;let i = index;">
+                <!-- orders_FormArray_List!==null &&  -->
+                <!-- <ng-template *ngIf="orders_FormArray_List!==undefined"> -->
+                <section formArrayName="customerOrders" *ngFor="let order of orders_FormArray_List.controls;let i = index;">
                     <section [formGroupName]="i">
                         <div class="md-form form-sm">
                             <i class="fa fa-product-hunt prefix"></i>
@@ -55,21 +55,21 @@
                         </div>
                     </section>
                 </section>
+                <!-- </ng-template> -->
                 <!-- ORDERS -->
 
                 <div class="text-center">
-                    <button [disabled]="!ordersList.valid || (ordersList.length >= ordersListSize)" (click)="addOrder()" type="button" class="btn btn-deep-orange waves-light"
-                        mdbRippleRadius>Set Order</button>
+                    <button [disabled]="!orders_FormArray_List.valid || orders_FormArray_List.length >= ordersListSize" (click)="addOrder()"
+                        type="button" class="btn btn-deep-orange waves-light" mdbRippleRadius>Set Order</button>
                 </div>
-
-                customerRegistrationForm {{this.customerRegistrationForm?.value?.customerEmail}}
 
             </section>
             <!-- BODY -->
 
             <div class="modal-footer ml-auto mr-auto">
                 <button (click)="hideModal()" type="button" class="btn btn-primary red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>
-                <button type="submit" class="btn btn-primary amber darken-4 relative waves-light" mdbRippleRadius>Save changes</button>
+                <button [disabled]="!customerRegistrationForm.valid" type="submit" class="btn btn-primary amber darken-4 relative waves-light"
+                    mdbRippleRadius>Save changes</button>
             </div>
 
         </section>

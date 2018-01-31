@@ -36,10 +36,11 @@ export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterConte
     this.customerRegistrationModal$();
   };
 
-  setCustomerRegistration() {
+  registrationModalLoader() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CustomerRegistrationComponent);
     this.customerRegistrationCompInstance = this.registrationModalDirective.viewContainerRef.createComponent(componentFactory);
     this.customerRegistrationCompInstance.instance.showModal();
+    this.ref.detectChanges();
   };
 
   customerRegistrationModal$() {
@@ -47,7 +48,7 @@ export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterConte
 
       if (state.modalName === CUSTOMER_REGISTRATION) {
         if (state.isOpen) {
-          this.setCustomerRegistration();
+          this.registrationModalLoader();
         } else {
           setTimeout(() => {
             this.registrationModalDirective.viewContainerRef.clear();

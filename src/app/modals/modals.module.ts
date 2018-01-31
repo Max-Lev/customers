@@ -1,4 +1,5 @@
-import { CustomerBuilderService } from './services/customer-builder.service';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { FormBuilderService } from './services/form-builder.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
@@ -27,9 +28,16 @@ import { RegistrationModalContainerComponent } from './registration-modal-contai
     RegistrationModalContainerComponent,
   ],
   providers: [
-    CustomerBuilderService
+    FormBuilderService
   ],
   entryComponents: [CustomerRegistrationComponent, OrdersRegistrationComponent],
   exports: [ModalsManagerComponent, RegistrationModalContainerComponent]
 })
-export class ModalsModule { }
+export class ModalsModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ModalsModule,
+      providers: [FormBuilderService]
+    };
+  }
+}

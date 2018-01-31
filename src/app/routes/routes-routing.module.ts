@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'Customers', loadChildren: './../customers/customers.module#CustomersModule'
+    // path: 'Customers', loadChildren: './../customers/customers.module#CustomersModule',
+    // data: {
+    //   preload: true
+    // }
   },
   {
     path: 'Orders', loadChildren: './../orders/orders.module#OrdersModule'

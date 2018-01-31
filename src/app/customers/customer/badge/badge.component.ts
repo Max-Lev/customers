@@ -4,8 +4,8 @@ import { ICustomer } from '../../../models/customer.model';
 @Component({
   selector: 'app-badge',
   template: `
-  <span *ngIf="customerOrdersCounter.Customer_Orders.length>0"
-  [innerText]="customerOrdersCounter.Customer_Orders.length"
+  <span *ngIf="customerOrdersCounter.customerOrders.length>0"
+  [innerText]="customerOrdersCounter.customerOrders.length"
   class="badge badge-danger badge-pill"></span>
   `,
   styles: [`

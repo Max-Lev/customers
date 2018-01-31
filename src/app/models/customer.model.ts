@@ -1,25 +1,35 @@
 export interface ICustomer {
-    Customer_ID: number;
-    Customer_Name: string;
-    Customer_Orders: IOrder[];
+    customerID: number;
+    customerName: string;
+    customerPhone: string;
+    customerEmail: string;
+    customerOrders?: [{
+        id: number,
+        product: string
+    }];
 };
 
 export class Customer implements ICustomer {
-    Customer_ID: number;
-    Customer_Name: string;
-    Customer_Orders: IOrder[];
+
+    customerID: number;
+    customerName: string;
+    customerPhone: string;
+    customerEmail: string;
+    customerOrders: [{ id: number; product: string; }];
     constructor(customer: ICustomer) {
-        this.Customer_ID = customer.Customer_ID;
-        this.Customer_Name = customer.Customer_Name;
-        this.Customer_Orders = customer.Customer_Orders;
+        this.customerID = customer.customerID;
+        this.customerName = customer.customerName;
+        this.customerPhone = customer.customerPhone;
+        this.customerEmail = customer.customerEmail;
+        this.customerOrders = customer.customerOrders;
     };
 };
 
 export interface IOrder {
-    order_id: number;
-    order_name: string;
-    is_selected: boolean;
-    is_deleted: boolean;
+    order_id?: number;
+    order_name?: string;
+    is_selected?: boolean;
+    is_deleted?: boolean;
 };
 
 export class Order implements IOrder {

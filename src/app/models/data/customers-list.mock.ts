@@ -1,45 +1,19 @@
 import { ICustomer } from '../../models/customer.model';
 
 export const Customer_Mock: ICustomer[] = [
-    // {
-    //     Customer_ID: 1,
-    //     Customer_Name: 'Nicky',
-    //     Customer_Orders: [
-    //         {
-    //             order_name: 'Shoes',
-    //             order_id: 1,
-    //             is_deleted: false,
-    //             is_selected: false
-    //         },
-    //         {
-    //             order_name: 'TShirts',
-    //             order_id: 2,
-    //             is_deleted: false,
-    //             is_selected: true
-    //         },
-    //         {
-    //             order_name: 'Pens',
-    //             order_id: 3,
-    //             is_deleted: false,
-    //             is_selected: false
-    //         },
-    //         {
-    //             order_name: 'Socks',
-    //             order_id: 4,
-    //             is_deleted: false,
-    //             is_selected: true
-    //         }
-    //     ]
-    // },
     {
-        Customer_ID: 2,
-        Customer_Name: 'Reebok',
-        Customer_Orders: [
+        customerID: 1,
+        customerName: 'Max',
+        customerEmail: 'max@gmai.com',
+        customerPhone: '0545969609',
+        customerOrders: [
             {
-                order_name: 'Pens',
-                order_id: 1,
-                is_deleted: false,
-                is_selected: false
+                id: 1,
+                product: 'Pens'
+            },
+            {
+                id: 2,
+                product: 'Shoes'
             }
         ]
     }
