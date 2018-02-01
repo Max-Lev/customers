@@ -1,3 +1,4 @@
+import { CustomersStoreService } from './../shared/customers-store.service';
 import { ICustomer, Customer } from './../models/customer.model';
 import { SharedService } from './../shared/shared.service';
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
@@ -15,14 +16,16 @@ import { Subscription } from 'rxjs/Subscription';
 export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscription: Subscription;
-  _Category = new Map();
+
   _Customer_Mock: any = Customer_Mock;
-  customersList: Customer[] = [];
-  constructor(private sharedService: SharedService, private ref: ChangeDetectorRef) { };
+
+  customersListContainer: Array<Customer> = [];
+
+  constructor(private sharedService: SharedService, private customersStoreService: CustomersStoreService,
+    private ref: ChangeDetectorRef) { };
 
   ngOnInit() {
-    this.customerRegistration$();
-    this.customersList = this._Customer_Mock;
+    this.loadRegisteredCustomers();
   };
 
   ngOnDestroy(): void {
@@ -30,15 +33,25 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   ngAfterViewInit(): void {
+    this.customerRegistration$();
+  };
 
+  loadRegisteredCustomers() {
+    this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(this._Customer_Mock)
+      (this.customersStoreService.set_CustomerList(this._Customer_Mock));
+    console.log('this.customersListContainer: ', this.customersListContainer);
+  };
+
+  addCustomerRegistration(customer: Customer) {
+    this.customersStoreService.set_CustomerDataStorage(customer)(this.customersStoreService.set_Customer(customer));
   };
 
   customerRegistration$() {
     this.subscription = this.sharedService.customer$.subscribe((customer: Customer) => {
-      console.log('customer: ', customer);
-      debugger;
-      this.customersList.push(customer);
+      this.addCustomerRegistration(customer);
+      this.customersListContainer.push(customer);
       this.ref.detectChanges();
+      console.log('this.customersListContainer: ', this.customersListContainer);
       return customer;
     });
   };

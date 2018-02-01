@@ -1,3 +1,4 @@
+import { CustomersStoreService } from './customers-store.service';
 import { SharedService } from './shared.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,7 +16,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [SharedService]
+      providers: [SharedService, CustomersStoreService]
     };
   }
-}
+};

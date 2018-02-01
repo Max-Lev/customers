@@ -19,8 +19,8 @@ export class CustomerComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('customer: ', this.customer);
-    console.log('customer - orders: ', this.customer.customerOrders);
+    console.log('customer input: ', this.customer);
+    // console.log('customer - orders: ', this.customer.customerOrders);
   };
 
 

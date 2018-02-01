@@ -21,7 +21,6 @@ export class SharedService {
   constructor() { };
 
   set_customersModalState$(state: IActiveModal) {
-    console.log('create customer');
     this.customerModalState$.next(state);
   };
 

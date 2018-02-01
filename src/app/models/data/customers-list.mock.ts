@@ -16,5 +16,17 @@ export const Customer_Mock: ICustomer[] = [
                 product: 'Shoes'
             }
         ]
+    },
+    {
+        customerID: 2,
+        customerName: 'Lev',
+        customerEmail: 'max@gmai.com',
+        customerPhone: '0545969609',
+        customerOrders: [
+            {
+                id: 1,
+                product: 'Pens'
+            }
+        ]
     }
 ];
