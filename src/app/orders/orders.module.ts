@@ -9,7 +9,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
-    path: '', component: OrdersComponent
+    path: '', component: OrdersComponent,
+    children: [
+      {
+        path: ':id', component: OrdersComponent
+      }
+    ]
   }
 ];
 

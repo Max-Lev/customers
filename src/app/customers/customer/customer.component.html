@@ -10,9 +10,13 @@
     <!--Text-->
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     <button class="btn btn-primary waves-light" mdbRippleRadius>Customer</button>
-    <button class="btn btn-primary waves-light orders" mdbRippleRadius>Orders
+    <a [routerLink]="['/Orders',customer.customerID]" class="btn btn-primary waves-light orders" mdbRippleRadius>Orders
       <app-badge [customerOrdersCounter]="customer"></app-badge>
-    </button>
+    </a>
+    <!-- <button (click)="customerOrders(customer)" class="btn btn-primary waves-light orders" mdbRippleRadius>Orders
+      <app-badge [customerOrdersCounter]="customer"></app-badge>
+    </button> -->
+    data: {{customer | json}}
   </div>
 
 </div>

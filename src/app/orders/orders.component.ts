@@ -1,50 +1,45 @@
+import { ICustomer } from './../models/customer.model';
+import { CustomersStoreService } from './../shared/customers-store.service';
+import { SharedService } from './../shared/shared.service';
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, AfterViewInit {
 
   customerOrdersForm: FormGroup;
 
   ordersList: FormArray;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private sharedService: SharedService,
+    private customersStoreService: CustomersStoreService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.buildOrdersForm();
+    const customerID = this.activatedRoute.children[0].snapshot.params;
+    this.getOrderData(customerID.id);
   };
 
-  buildOrdersForm() {
-    this.customerOrdersForm = this.formBuilder.group({
-      name: ['max'],
-      lastName: ['lev'],
-      address: this.formBuilder.group({
-        city: ['NY'],
-        location: ['US']
-      }),
-      orders: this.formBuilder.array([this.ordersGroupListBuilder()])
-    });
-    this.ordersList = <FormArray>this.customerOrdersForm.get('orders');
+  ngAfterViewInit(): void {
+
   };
- 
-  ordersGroupListBuilder(): FormGroup {
-    return this.formBuilder.group({
-      product: ['', [Validators.required, Validators.minLength(2)]],
-    });
+
+  getOrderData(customerID: string) {
+
+    // const selectedCustomer: ICustomer = this.customersStoreService.customersMap.get(customerID);
+    const selectedCustomer: ICustomer = this.customersStoreService.getStorage()
+      (this.customersStoreService.getCustomerByID('2'));
+    debugger;
   };
 
 
-  addOrder() {
-    this.ordersList.push(this.ordersGroupListBuilder());
-    console.log('ordersList: ', this.ordersList)
-  };
 
-  removeOrder(orderIndex: number) {
-    this.ordersList.removeAt(orderIndex);
-  };
 
 }

@@ -1,4 +1,4 @@
-import { Customer } from './../models/customer.model';
+import { Customer, ICustomer } from './../models/customer.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -8,7 +8,36 @@ export class CustomersStoreService {
 
   customersSet: Set<Customer> = new Set();
 
-  constructor() { };
+  customersKeyType = 'customerID:';
+
+  constructor() {
+    this.getStorage();
+  };
+
+
+  setStorage() {
+
+    this.customersMap.forEach((customer: ICustomer) => {
+      localStorage.setItem(`${this.customersKeyType}${customer.customerID}`, JSON.stringify(customer));
+    });
+
+  };
+
+  getStorage(): any {
+    debugger;
+    return (): Array<Customer> => {
+      const storageKeys = Object.keys(localStorage);
+      const list = storageKeys.filter((item, i) => item === `${this.customersKeyType}${i}`);
+      const customerList = list.map(item => JSON.parse(localStorage.getItem(item)));
+      debugger;
+      return customerList;
+    }
+
+  };
+
+  getCustomerByID(id: string) {
+    debugger;
+  };
 
   customersViewRenderer(): Array<Customer> {
     return Array.from(this.customersMap.values());
@@ -16,6 +45,7 @@ export class CustomersStoreService {
 
   set_CustomerDataStorage(list: Customer | Array<Customer>): any {
     return (customerData: any): Array<Customer> => {
+      this.setStorage();
       return customerData;
     }
   };

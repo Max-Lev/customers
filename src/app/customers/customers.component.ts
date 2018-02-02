@@ -17,7 +17,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscription: Subscription;
 
-  _Customer_Mock: any = Customer_Mock;
+  customersData: any;// = Customer_Mock;
 
   customersListContainer: Array<Customer> = [];
 
@@ -25,6 +25,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
     private ref: ChangeDetectorRef) { };
 
   ngOnInit() {
+    this.customersData = this.customersStoreService.getStorage()('');
     this.loadRegisteredCustomers();
   };
 
@@ -37,8 +38,8 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   loadRegisteredCustomers() {
-    this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(this._Customer_Mock)
-      (this.customersStoreService.set_CustomerList(this._Customer_Mock));
+    this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(this.customersData)
+      (this.customersStoreService.set_CustomerList(this.customersData));
     console.log('this.customersListContainer: ', this.customersListContainer);
   };
 

@@ -22,9 +22,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.sharedService.customerModalState$.subscribe((state) => {
       console.log(state);
     });
-    // setTimeout(() => {
-      this.openCustomerRegistrationForm();
-    // }, 0);
+
+    // this.openCustomerRegistrationForm();
+
   };
 
   openCustomerRegistrationForm() {
