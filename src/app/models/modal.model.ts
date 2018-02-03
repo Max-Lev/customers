@@ -4,5 +4,7 @@ export interface IActiveModal {
 };
 
 export const CUSTOMER_REGISTRATION = 'CustomerRegistrationComponent';
-const ORDERS_REGISTRATION = 'OrdersRegistrationComponent';
+export const ORDERS_REGISTRATION = 'OrdersRegistrationComponent';
+export const CUSTOMER_MODE = 'CUSTOMER';
+export const ORDERS_MODE = 'ORDERS';
 

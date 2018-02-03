@@ -1,3 +1,51 @@
-<p>
-  orders-registration works!
-</p>
+<form [formGroup]="ordersRegistrationForm" (ngSubmit)="saveOrder()" mdbModal #fluid="mdb-modal" class="modal fade right"
+  id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <section class="modal-dialog modal-full-height modal-right" role="document">
+
+    <!--Content-->
+    <section class="modal-content">
+      <!--Header-->
+      <section class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Customer Registration</h4>
+        <button (click)="hideModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </section>
+      <!--Body-->
+      <section class="modal-body mb-0">
+        <!-- ORDERS -->
+        <section formArrayName="customerOrders" *ngFor="let order of ordersList.controls;let i = index;">
+          <section [formGroupName]="i">
+            <div class="md-form form-sm">
+              <i class="fa fa-product-hunt prefix"></i>
+              <button (click)="removeOrder(i)" type="button" class="close remove-product" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <input formControlName="product" mdbActive autocomplete="false" type="text" id="" class="form-control">
+              <label for="">Product</label>
+            </div>
+          </section>
+        </section>
+        <!-- ORDERS -->
+
+        <div class="text-center">
+          <button [disabled]="!ordersList.valid || ordersList.length >= ordersListSize" (click)="addOrder()"
+            type="button" class="btn btn-deep-orange waves-light" mdbRippleRadius>Set Order</button>
+        </div>
+
+      </section>
+      <!-- BODY -->
+
+      <div class="modal-footer ml-auto mr-auto">
+        <button (click)="hideModal()" type="button" class="btn btn-primary red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>
+        <button [disabled]="!ordersRegistrationForm.valid" type="submit" class="btn btn-primary amber darken-4 relative waves-light"
+          mdbRippleRadius>Save changes</button>
+      </div>
+
+    </section>
+    <!--/.Content-->
+
+  </section>
+
+</form>

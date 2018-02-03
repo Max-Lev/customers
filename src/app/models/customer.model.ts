@@ -3,10 +3,7 @@ export interface ICustomer {
     customerName: string;
     customerPhone: string;
     customerEmail: string;
-    customerOrders?: [{
-        id: number,
-        product: string
-    }];
+    customerOrders?: [Order];
 };
 
 export class Customer implements ICustomer {
@@ -26,21 +23,15 @@ export class Customer implements ICustomer {
 };
 
 export interface IOrder {
-    order_id?: number;
-    order_name?: string;
-    is_selected?: boolean;
-    is_deleted?: boolean;
+    id?: number;
+    product?: string;
 };
 
 export class Order implements IOrder {
-    order_id: number;
-    order_name: string;
-    is_selected: any;
-    is_deleted: boolean;
+    id: number;
+    product: string;
     constructor(order: IOrder) {
-        this.order_id = order.order_id;
-        this.order_name = order.order_name;
-        this.is_selected = order.is_selected;
-        this.is_deleted = order.is_deleted;
+        this.id = order.id;
+        this.product = order.product;
     }
 };

@@ -25,14 +25,4 @@ export class CustomerComponent implements OnInit, OnChanges {
     // console.log('customer - orders: ', this.customer.customerOrders);
   };
 
-  // customerOrders(customer: Customer) {
-  //   this.router.navigate(['/Orders', customer.customerID,
-  //     { customerData: customer, data: ['zzzz'] }]);
-  //   // this.router.navigate(['Orders', { id: customer.customerID }])
-  //   // { relativeTo: this.route }
-  //   //['/Orders',customer.customerID,{customerData:customer}]
-  // };
-
-
-
 }

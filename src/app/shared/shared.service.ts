@@ -12,15 +12,18 @@ export class SharedService {
 
   customerModalAction: IActiveModal = { isOpen: false, modalName: CUSTOMER_REGISTRATION };
 
+
   customerModalState$: BehaviorSubject<IActiveModal> = new BehaviorSubject<IActiveModal>(this.customerModalAction);
 
   customer: Subject<any> = new Subject();
 
   customer$ = this.customer.asObservable();
 
+  activeCustomer: ICustomer;
+
   constructor() { };
 
-  set_customersModalState$(state: IActiveModal) {
+  set_ModalState$(state: IActiveModal) {
     this.customerModalState$.next(state);
   };
 
@@ -29,6 +32,14 @@ export class SharedService {
     const customer: ICustomer = new Customer(customerProfile);
     this.customer.next(customer);
     return this.customer;
+  };
+
+  setActiveCustomer(customer: ICustomer) {
+    this.activeCustomer = customer;
+  };
+
+  getActiveCustomer(): ICustomer {
+    return this.activeCustomer;
   };
 
 

@@ -1,1 +1,10 @@
-orders
+<section class="container">
+
+    <ul class="list-group">
+        <li *ngFor="let order of customerOrders" class="list-group-item d-flex justify-content-between align-items-center">
+            {{order.product}}
+            <i (click)="edit()" class="fa fa-edit list-group-item d-flex justify-content-between align-items-center"></i>
+        </li>
+    </ul>
+
+</section>

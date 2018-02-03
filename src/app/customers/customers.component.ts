@@ -25,7 +25,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
     private ref: ChangeDetectorRef) { };
 
   ngOnInit() {
-    this.customersData = this.customersStoreService.getStorage()('');
+    this.customersData = this.customersStoreService.getStorage();
     this.loadRegisteredCustomers();
   };
 

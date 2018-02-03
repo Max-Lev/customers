@@ -1,3 +1,4 @@
+import { OrdersFormBuilderService } from './services/orders-form-builder.service';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { FormBuilderService } from './services/form-builder.service';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,7 @@ import { OrdersRegistrationComponent } from './orders-registration/orders-regist
 import { ModalModule, ActiveModule } from 'angular-bootstrap-md';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RegistrationModalContainerComponent } from './registration-modal-container/registration-modal-container.component';
+//import { RegistrationModalContainerComponent } from './registration-modal-container/registration-modal-container.component';
 
 @NgModule({
   imports: [
@@ -24,14 +25,14 @@ import { RegistrationModalContainerComponent } from './registration-modal-contai
     CustomerRegistrationComponent,
     ModalsManagerComponent,
     RegistrationModalDirective,
-    OrdersRegistrationComponent,
-    RegistrationModalContainerComponent,
+    OrdersRegistrationComponent
   ],
   providers: [
-    FormBuilderService
+    FormBuilderService,
+    OrdersFormBuilderService
   ],
   entryComponents: [CustomerRegistrationComponent, OrdersRegistrationComponent],
-  exports: [ModalsManagerComponent, RegistrationModalContainerComponent]
+  exports: [ModalsManagerComponent]
 })
 export class ModalsModule {
   static forRoot(): ModuleWithProviders {

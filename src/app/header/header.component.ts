@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       console.log(state);
     });
 
-    // this.openCustomerRegistrationForm();
+    //this.openCustomerRegistrationForm();
 
   };
 
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       isOpen: true,
       modalName: CUSTOMER_REGISTRATION
     };
-    this.sharedService.set_customersModalState$(activeComponent);
+    this.sharedService.set_ModalState$(activeComponent);
   };
 
 }

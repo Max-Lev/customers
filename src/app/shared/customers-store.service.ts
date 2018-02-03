@@ -16,27 +16,23 @@ export class CustomersStoreService {
 
 
   setStorage() {
-
     this.customersMap.forEach((customer: ICustomer) => {
       localStorage.setItem(`${this.customersKeyType}${customer.customerID}`, JSON.stringify(customer));
     });
-
   };
 
-  getStorage(): any {
-    debugger;
-    return (): Array<Customer> => {
-      const storageKeys = Object.keys(localStorage);
-      const list = storageKeys.filter((item, i) => item === `${this.customersKeyType}${i}`);
-      const customerList = list.map(item => JSON.parse(localStorage.getItem(item)));
-      debugger;
-      return customerList;
+  getStorage(): Array<Customer> | Customer {
+    const storageKeys = Object.keys(localStorage);
+    const list = storageKeys.filter((item, i) => item === `${this.customersKeyType}${i}`);
+    const customerList = list.map(item => JSON.parse(localStorage.getItem(item)));
+    return customerList;
+  }
+
+  getCustomerByID(custID: number): any {
+    return (list: Array<Customer>) => {
+      const customer: ICustomer = list.find(cust => cust.customerID === custID);
+      return customer;
     }
-
-  };
-
-  getCustomerByID(id: string) {
-    debugger;
   };
 
   customersViewRenderer(): Array<Customer> {

@@ -6,7 +6,7 @@ import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, ContentChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ModalDirective, ActiveDirective } from 'angular-bootstrap-md';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { ViewChildren } from '@angular/core';
 import { QueryList } from '@angular/core';
 import { FormBuilderService } from '../services/form-builder.service';
@@ -19,11 +19,11 @@ import { FormBuilderService } from '../services/form-builder.service';
 })
 export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
+  // customerEditMode: boolean = false;
+
   subscription: Subscription;
 
   customerRegistrationForm: FormGroup;
-
-  @ViewChild('modalContainer') modalContainer: ModalDirective;
 
   @ViewChildren(ActiveDirective) mdbActiveList: QueryList<ActiveDirective>;
 
@@ -34,24 +34,39 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
   ordersListCounter$: Subject<number> = new Subject();
 
   constructor(public viewContainerRef: ViewContainerRef, private formBuilderService: FormBuilderService,
-    private ref: ChangeDetectorRef, private sharedService: SharedService) {
+    private formBuilder: FormBuilder, private ref: ChangeDetectorRef, private sharedService: SharedService) {
 
-    this.customerRegistrationForm = this.formBuilderService.registrationFormBuilder();
-    this.orders_FormArray_List = this.formBuilderService.getOrdersList(this.customerRegistrationForm);
+    this.customerRegistrationForm = this.formBuilderService.customer_RegistrationFormBuilder();
+    this.orders_FormArray_List = this.formBuilderService.get_CustomerOrdersList(this.customerRegistrationForm);
 
   };
 
   ngOnInit() {
     this.customerRegistrationModalState$();
+    this.setCustomerEditData();
   };
 
   ngAfterViewInit(): void {
-    this.ordersCounter$();
+    this.formOrdersCounter$();
+  };
+
+  setCustomerEditData() {
+    // this.customerRegistrationForm.controls.customerEmail.setValue('m@gmail.com');
+    const list = [{ product: 'zzzz' }, { product: 'sss' }];
+    const ordersList = <FormArray>this.customerRegistrationForm.get('customerOrders');
+    this.orders_FormArray_List.controls = [];
+    list.forEach((item, k) => {
+      this.orders_FormArray_List.push(this.formBuilderService.orders_FormGroupBuilder());
+      ordersList.controls[k]['controls'].product.setValue(item.product);
+      console.log(ordersList);
+    });
   };
 
   addOrder() {
     this.ordersListCounter$.next(this.orders_FormArray_List.length);
-    this.orders_FormArray_List.push(this.formBuilderService.ordersFormGroupBuilder());
+    this.orders_FormArray_List.push(this.formBuilderService.orders_FormGroupBuilder());
+    console.log(this.orders_FormArray_List)
+    console.log(this.customerRegistrationForm)
   };
 
   removeOrder(orderIndex: number) {
@@ -59,7 +74,7 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
     this.orders_FormArray_List.removeAt(orderIndex);
   };
 
-  ordersCounter$() {
+  formOrdersCounter$() {
     this.subscription = this.ordersListCounter$.subscribe((counter) => {
       const ordersCountState = (this.orders_FormArray_List.length <= this.ordersListSize)
         ? this.orders_FormArray_List.enable() : this.orders_FormArray_List.disable();
@@ -83,9 +98,10 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   reset_form_mdbActive() {
 
-    this.customerRegistrationForm = this.formBuilderService.registrationFormBuilder();
+    // this.customerRegistrationForm = this.formBuilderService.registrationFormBuilder(this.customerEditMode);
+    this.customerRegistrationForm = this.formBuilderService.customer_RegistrationFormBuilder();
     this.customerRegistrationForm.reset({});
-    this.orders_FormArray_List = this.formBuilderService.getOrdersList(this.customerRegistrationForm);
+    this.orders_FormArray_List = this.formBuilderService.get_CustomerOrdersList(this.customerRegistrationForm);
     this.ref.detectChanges();
     this.mdbActiveList.map(el => el.onBlur());
 
@@ -93,7 +109,7 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   customerRegistrationModalState$() {
     this.mdbModal.onHide.subscribe((state) => {
-      this.sharedService.set_customersModalState$({ isOpen: false, modalName: CUSTOMER_REGISTRATION })
+      this.sharedService.set_ModalState$({ isOpen: false, modalName: CUSTOMER_REGISTRATION })
     });
     this.mdbModal.onShow.subscribe((state) => { });
   };
