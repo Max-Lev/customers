@@ -6,8 +6,7 @@
                 <label for="p-3">Customer:</label>
                 {{selectedCustomer?.customerName}}
             </h5>
-        </section>
-
+        
         <ul class="list-group">
             <li *ngFor="let order of customerOrders" class="list-group-item d-flex justify-content-between align-items-center">
                 {{order.product}}
@@ -15,9 +14,12 @@
             </li>
         </ul>
 
-        <section *ngIf="customerOrders.length===0 && selectedCustomer!==undefined" class="ml-auto mr-auto">
+        <section *ngIf="customerOrders.length===0 && selectedCustomer!==undefined" class="text-center">
             <button (click)="edit()" type="button" class="btn btn-deep-orange waves-light" mdbRippleRadius>No Products Found</button>
         </section>
+
+    </section>
+
     </section>
 
 </section>
