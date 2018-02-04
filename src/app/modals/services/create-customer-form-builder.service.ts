@@ -11,24 +11,23 @@ export class CreateCustomerFormBuilderService {
 
     const customerRegistrationForm: FormGroup = this.formBuilder.group({
       customerName: ['', [
-        Validators.required, Validators.minLength(2),
+        Validators.required,
+        Validators.minLength(2),
       ]],
       customerEmail: ['', [
         Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.(com|il|net|info|biz)')
       ]],
       customerPhone: ['', [
         Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(10)
+        Validators.minLength(9),
+        Validators.maxLength(10),
+        Validators.pattern('[0-9]{9,10}$')
       ]],
       customerOrders: this.formBuilder.array([this.orders_FormGroupBuilder()])
     });
-
-    console.log('customerRegistrationForm: ', customerRegistrationForm)
     return customerRegistrationForm;
   };
-
 
   orders_FormGroupBuilder(): FormGroup {
     return this.formBuilder.group({

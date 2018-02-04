@@ -69,17 +69,41 @@
                 </div>
                 <!-- DELETE CUSTOMER BTN -->
 
-                <section class="text-center">
-                    <section *ngIf="customerRegistrationForm.get('customerName').touched && 
-                    customerRegistrationForm.get('customerName').errors">
-                        <section *ngIf="customerRegistrationForm.get('customerName').errors.required">
-                            <span>Customer Name Required</span>
-                        </section>
-                    </section>
-                </section>
-
             </section>
             <!-- BODY -->
+
+            <section class="text-center p-3">
+                <section *ngIf="customerRegistrationForm.get('customerName').touched && 
+                customerRegistrationForm.get('customerName').errors">
+                    <section *ngIf="customerRegistrationForm.get('customerName').errors.required">
+                        <span>Customer Name Required</span>
+                    </section>
+                    <section *ngIf="customerRegistrationForm.get('customerName').errors.minlength">
+                        <span>Customer min. Name Invalid</span>
+                    </section>
+                </section>
+                <section *ngIf="customerRegistrationForm.get('customerEmail').touched && 
+                customerRegistrationForm.get('customerEmail').errors">
+                    <section *ngIf="customerRegistrationForm.get('customerEmail').errors.required">
+                        <span>Email Address Required</span>
+                    </section>
+                </section>
+                <section *ngIf="customerRegistrationForm.get('customerPhone').touched && 
+                customerRegistrationForm.get('customerPhone').errors">
+                    <section *ngIf="customerRegistrationForm.get('customerPhone').errors.required">
+                        <span>Phone Number Required</span>
+                    </section>
+                    <section *ngIf="customerRegistrationForm.get('customerPhone').errors.pattern">
+                        <span>Phone number Invalid</span>
+                    </section>
+                </section>
+                <section *ngIf="customerRegistrationForm.get('customerOrders')!==null && 
+                customerRegistrationForm.get('customerOrders').touched && 
+                !customerRegistrationForm.get('customerOrders').valid">
+                    <span>This Selected Order Required</span>
+                </section>
+            </section>
+
 
             <div class="modal-footer ml-auto mr-auto">
                 <button (click)="hideModal()" type="button" class="btn red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>

@@ -23,7 +23,6 @@ export class OrdersRegistrationComponent implements OnInit {
 
   ordersList: FormArray;
 
-  // tslint:disable-next-line:no-inferrable-types
   ordersListSize: number = 3;
 
   @ViewChild(ModalDirective) mdbModal: ModalDirective;

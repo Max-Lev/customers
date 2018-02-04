@@ -15,9 +15,15 @@ export class EditCustomerFormBuilderService {
       ]],
       customerEmail: ['', [
         Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.(com|il|net|info|biz)')
       ]],
-      customerPhone: ['', [Validators.required]]
+      customerPhone: ['', [
+        Validators.required,
+        Validators.minLength(9),
+        Validators.maxLength(10),
+        Validators.pattern('[0-9]{9,10}$'),
+        // Validators.pattern('[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$')
+      ]]
     });
     return customerEditForm;
   };

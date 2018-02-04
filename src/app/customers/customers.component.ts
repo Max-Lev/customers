@@ -1,4 +1,4 @@
-import { CUSTOMER_EDIT_MODE } from './../models/modal.model';
+import { CUSTOMER_EDIT_MODE, CUSTOMER_REGISTRATION } from './../models/modal.model';
 import { CustomersStoreService } from './../shared/customers-store.service';
 import { ICustomer, Customer } from './../models/customer.model';
 import { SharedService } from './../shared/shared.service';
@@ -73,6 +73,10 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sharedService.set_ModalState$(state);
   };
 
+  addCustomer() {
+    const activeComponent: IActiveModal = { isOpen: true, modalName: CUSTOMER_REGISTRATION };
+    this.sharedService.set_ModalState$(activeComponent);
+  };
 
 
 }

@@ -38,10 +38,18 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   getOrderData() {
-    const customerID = this.activatedRoute.children[0].snapshot.params;
-    this.selectedCustomer = this.customersStoreService.getCustomerByID(+customerID.id)(this.customersStoreService.getStorage());
-    this.customerOrders = this.selectedCustomer.customerOrders;
-    this.sharedService.setActiveCustomer(this.selectedCustomer);
+    if (this.activatedRoute.children[0] !== undefined) {
+      const customerID = this.activatedRoute.children[0].snapshot.params;
+      this.selectedCustomer = this.customersStoreService.getCustomerByID(+customerID.id)(this.customersStoreService.getStorage());
+      if (this.selectedCustomer !== undefined) {
+        this.customerOrders = this.selectedCustomer.customerOrders;
+        this.sharedService.setActiveCustomer(this.selectedCustomer);
+      } else {
+        this.router.navigate(['Customers']);
+      }
+    } else {
+      this.router.navigate(['Customers']);
+    }
   };
 
   ordersState$() {
