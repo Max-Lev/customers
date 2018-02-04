@@ -65,18 +65,25 @@
 
                 <!-- DELETE CUSTOMER BTN -->
                 <div *ngIf="customerEditMode" class="text-center">
-                    <button (click)="deleteCustomer()"
-                        type="button" class="btn btn-danger waves-light" mdbRippleRadius>Delete Customer</button>
+                    <button (click)="deleteCustomer()" type="button" class="btn btn-danger waves-light" mdbRippleRadius>Delete Customer</button>
                 </div>
                 <!-- DELETE CUSTOMER BTN -->
+
+                <section class="text-center">
+                    <section *ngIf="customerRegistrationForm.get('customerName').touched && 
+                    customerRegistrationForm.get('customerName').errors">
+                        <section *ngIf="customerRegistrationForm.get('customerName').errors.required">
+                            <span>Customer Name Required</span>
+                        </section>
+                    </section>
+                </section>
 
             </section>
             <!-- BODY -->
 
             <div class="modal-footer ml-auto mr-auto">
                 <button (click)="hideModal()" type="button" class="btn red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>
-                <button [disabled]="!customerRegistrationForm.valid" type="submit" class="btn amber darken-4 relative waves-light"
-                    mdbRippleRadius>Save changes</button>
+                <button [disabled]="!customerRegistrationForm.valid" type="submit" class="btn amber darken-4 relative waves-light" mdbRippleRadius>Save changes</button>
             </div>
 
         </section>

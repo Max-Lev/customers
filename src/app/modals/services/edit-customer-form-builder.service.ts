@@ -9,8 +9,14 @@ export class EditCustomerFormBuilderService {
 
   customer_EditFormBuilder(): FormGroup {
     const customerEditForm = this.formBuilder.group({
-      customerName: ['', [Validators.required]],
-      customerEmail: ['', [Validators.required]],
+      customerName: ['', [
+        Validators.required,
+        Validators.minLength(2)
+      ]],
+      customerEmail: ['', [
+        Validators.required,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')
+      ]],
       customerPhone: ['', [Validators.required]]
     });
     return customerEditForm;

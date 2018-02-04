@@ -19,14 +19,9 @@ export class CustomerComponent implements OnInit, OnChanges {
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit() { };
 
-  };
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('customer input: ', this.customer);
-    // console.log('customer - orders: ', this.customer.customerOrders);
-  };
+  ngOnChanges(changes: SimpleChanges): void { };
 
   editCustomer(customer) {
     this.editCustomerEvent.emit(customer);

@@ -8,9 +8,7 @@ import { ICustomer } from '../../../models/customer.model';
   [innerText]="customerOrdersCounter.customerOrders.length"
   class="badge badge-danger badge-pill"></span>
   `,
-  styles: [`
-  :host{position: absolute;right: -10px;top: -5px;}
-  `]
+  styles: [`:host{position: absolute;right: -0.5em;top: -0.5em;}`]
 })
 export class BadgeComponent implements OnInit, OnChanges {
 
@@ -18,11 +16,8 @@ export class BadgeComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { };
 
-  ngOnChanges(): void {
-
-  }
+  ngOnChanges(): void { };
 
 }

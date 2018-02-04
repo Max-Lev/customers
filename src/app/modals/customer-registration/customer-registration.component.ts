@@ -47,6 +47,7 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit, Aft
   ngOnInit() {
     this.customerRegistrationModalState$();
     this.customerEditFormBuilder();
+    console.log(this.customerRegistrationForm)
   };
 
   ngAfterViewInit(): void {

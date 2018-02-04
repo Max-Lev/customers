@@ -11,10 +11,11 @@ export class CreateCustomerFormBuilderService {
 
     const customerRegistrationForm: FormGroup = this.formBuilder.group({
       customerName: ['', [
-        Validators.required, Validators.minLength(2)
+        Validators.required, Validators.minLength(2),
       ]],
       customerEmail: ['', [
-        Validators.required
+        Validators.required,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')
       ]],
       customerPhone: ['', [
         Validators.required,

@@ -19,7 +19,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscription: Subscription;
 
-  customersData: any;// = Customer_Mock;
+  customersData: any;
 
   customersListContainer: Array<Customer> = [];
 
@@ -27,7 +27,6 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
     private ref: ChangeDetectorRef) { };
 
   ngOnInit() {
-    //this.customersData = this.customersStoreService.getStorage();
     this.loadRegisteredCustomers();
   };
 
@@ -39,26 +38,19 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.customerRegistration$();
     this.customerState$();
-    // this.customerDeleteState$();
   };
 
   loadRegisteredCustomers() {
     const customersData: any = this.customersStoreService.getStorage();
     this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(customersData)
       (this.customersStoreService.set_CustomerList(customersData));
-    // this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(this.customersData)
-    //   (this.customersStoreService.set_CustomerList(this.customersData));
-    console.log('this.customersListContainer: ', this.customersListContainer);
   };
 
   customerRegistration$() {
     this.subscription = this.sharedService.customerRegistration$.subscribe((customer: Customer) => {
-      debugger;
       this.addCustomerRegistration(customer);
       this.customersListContainer.push(customer);
-      // this.ref.detectChanges();
       this.ref.markForCheck();
-      console.log('this.customersListContainer: ', this.customersListContainer);
       return customer;
     });
   };
@@ -70,9 +62,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
   customerState$() {
     this.subscription = this.customersStoreService.customerStore$.subscribe((cust: Customer) => {
       this.customersListContainer = <Array<Customer>>this.customersStoreService.getStorage();
-      // this.customersData = <Array<Customer>>this.customersStoreService.getStorage();
       this.ref.detectChanges();
-      debugger;
       return cust;
     });
   };
