@@ -22,7 +22,7 @@ const routes: Routes = [
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     SharedModule,
-    // !!! ModalsModule.forRoot()
+    // !!! ModalsModule.forRoot() !!!
   ],
   declarations: [
     CustomersComponent,
