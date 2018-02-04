@@ -1,14 +1,11 @@
 <section class="container">
   <section class="row">
-
     <section *ngFor="let customer of customersListContainer" class="col-6 mt-1">
       <app-customer [customer]="customer" (editCustomerEvent)="editCustomerEventHandler($event)"></app-customer>
     </section>
-
     <section *ngIf="customersListContainer.length===0" class="ml-auto mr-auto">
       <button (click)="addCustomer()" type="button" 
       class="ml-auto mr-auto btn btn-deep-orange waves-light" mdbRippleRadius>No Customers Found</button>
     </section>
-
   </section>
 </section>
