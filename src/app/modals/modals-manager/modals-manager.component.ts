@@ -10,8 +10,10 @@ import {
   Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
   AfterViewInit, AfterContentInit, ChangeDetectorRef
 } from '@angular/core';
-
-import { IActiveModal, CUSTOMER_REGISTRATION, ORDERS_REGISTRATION, ORDERS_MODE, CUSTOMER_MODE } from '../../models/modal.model';
+import {
+  IActiveModal, CUSTOMER_REGISTRATION, ORDERS_REGISTRATION,
+  ORDERS_MODE, CUSTOMER_MODE, CUSTOMER_EDIT_MODE
+} from '../../models/modal.model';
 
 @Component({
   selector: 'app-modals-manager',
@@ -38,14 +40,23 @@ export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterConte
     this.activeModal$();
   };
 
-  registrationModalLoader(customerEditMode: boolean) {
+  // registrationModalLoader(customerEditMode: boolean) {
+  registrationModalLoader(state: IActiveModal) {
 
     let componentFactory: any;
-    if (customerEditMode) {
+    if (state.modalName === CUSTOMER_REGISTRATION) {
       componentFactory = this.componentFactoryResolver.resolveComponentFactory(CustomerRegistrationComponent);
       this.customerRegistrationCompInstance = this.registrationModalDirective.viewContainerRef.createComponent(componentFactory);
       this.customerRegistrationCompInstance.instance.showModal();
-    } else {
+      this.customerRegistrationCompInstance.instance.customerEditMode = false;
+    }
+    if (state.modalName === CUSTOMER_EDIT_MODE) {
+      componentFactory = this.componentFactoryResolver.resolveComponentFactory(CustomerRegistrationComponent);
+      this.customerRegistrationCompInstance = this.registrationModalDirective.viewContainerRef.createComponent(componentFactory);
+      this.customerRegistrationCompInstance.instance.showModal();
+      this.customerRegistrationCompInstance.instance.customerEditMode = true;
+    }
+    if (state.modalName === ORDERS_REGISTRATION) {
       componentFactory = this.componentFactoryResolver.resolveComponentFactory(OrdersRegistrationComponent);
       this.ordersRegistrationCompInstance = this.registrationModalDirective.viewContainerRef.createComponent(componentFactory);
       this.ordersRegistrationCompInstance.instance.showModal();
@@ -58,23 +69,34 @@ export class ModalsManagerComponent implements OnInit, AfterViewInit, AfterConte
 
       if (state.modalName === CUSTOMER_REGISTRATION) {
         if (state.isOpen) {
-          this.registrationModalLoader(true);
+          // this.registrationModalLoader(true);
+          this.registrationModalLoader(state);
         } else {
           setTimeout(() => {
             this.registrationModalDirective.viewContainerRef.clear();
           }, 500);
         }
-      }
+      };
 
       if (state.modalName === ORDERS_REGISTRATION) {
         if (state.isOpen) {
-          this.registrationModalLoader(false);
+          this.registrationModalLoader(state);
         } else {
           setTimeout(() => {
             this.registrationModalDirective.viewContainerRef.clear();
           }, 500);
         }
-      }
+      };
+
+      if (state.modalName === CUSTOMER_EDIT_MODE) {
+        if (state.isOpen) {
+          this.registrationModalLoader(state);
+        } else {
+          setTimeout(() => {
+            this.registrationModalDirective.viewContainerRef.clear();
+          }, 500);
+        }
+      };
 
     });
   };

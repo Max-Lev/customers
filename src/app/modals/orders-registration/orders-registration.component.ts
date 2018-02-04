@@ -17,7 +17,7 @@ export class OrdersRegistrationComponent implements OnInit {
 
   ordersRegistrationForm: FormGroup;
 
-  customer: ICustomer;
+  customer: Customer;
 
   customerOrders: Array<Order> = [];
 
@@ -31,27 +31,24 @@ export class OrdersRegistrationComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef, private activatedRoute: ActivatedRoute,
     private sharedService: SharedService, private customersStoreService: CustomersStoreService,
     private ordersFormBuilderService: OrdersFormBuilderService) {
-
     this.ordersRegistrationForm = this.ordersFormBuilderService.buildForm();
     this.ordersList = this.ordersFormBuilderService.get_CustomerOrdersList(this.ordersRegistrationForm);
-
   };
 
   ngOnInit() {
-    this.getOrderData();
+    this.getOrderData_FormArrayBinding();
   };
 
-  getOrderData() {
-    this.customer = this.sharedService.getActiveCustomer();
+  getOrderData_FormArrayBinding() {
+    this.customer = <Customer>this.sharedService.getActiveCustomer();
     this.customerOrders = this.customer.customerOrders;
     this.ordersList.controls = [];
 
     this.customerOrders.map((order, k) => {
-
       this.ordersList.push(this.ordersFormBuilderService.orders_FormGroupBuilder());
       this.ordersList.controls[k]['controls'].product.setValue(order.product);
-
     });
+
   };
 
   addOrder() {
@@ -62,8 +59,19 @@ export class OrdersRegistrationComponent implements OnInit {
     this.ordersList.removeAt(orderIndex);
   };
 
-  saveOrder() {
-    debugger;
+  submitForm() {
+    if (this.ordersRegistrationForm.valid) {
+      this.updateOrdersState$()
+    } else {
+      return;
+    }
+  };
+
+  updateOrdersState$() {
+    this.customerOrders = this.ordersRegistrationForm.value['customerOrders'];
+    this.customer.customerOrders = this.ordersRegistrationForm.value['customerOrders'];
+    this.customersStoreService.update_CustomerDataStorage(this.customer);
+    this.hideModal();
   };
 
   showModal() {

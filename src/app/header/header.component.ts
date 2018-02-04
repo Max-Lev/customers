@@ -19,9 +19,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngOnInit() { };
 
   ngAfterViewInit(): void {
-    this.sharedService.customerModalState$.subscribe((state) => {
-      console.log(state);
-    });
+    // this.sharedService.customerModalState$.subscribe((state) => {
+    //   console.log(state);
+    // });
 
     //this.openCustomerRegistrationForm();
 

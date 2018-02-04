@@ -2,7 +2,7 @@
   <section class="row">
 
     <section *ngFor="let customer of customersListContainer" class="col-6 mt-1">
-      <app-customer [customer]="customer"></app-customer>
+      <app-customer [customer]="customer" (editCustomerEvent)="editCustomerEventHandler($event)"></app-customer>
     </section>
 
   </section>

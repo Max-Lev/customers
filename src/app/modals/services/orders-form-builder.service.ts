@@ -6,19 +6,14 @@ import { FormControl } from '@angular/forms';
 @Injectable()
 export class OrdersFormBuilderService {
 
-  list = [{ product: 'max' }, { product: 'lev' }];
-
   constructor(private formBuilder: FormBuilder) { };
 
-
   buildForm(): FormGroup {
-
     const form = this.formBuilder.group({
       customerOrders: this.formBuilder.array([this.orders_FormGroupBuilder()])
     });
     return form;
   };
-
 
   orders_FormGroupBuilder(): FormGroup {
     return this.formBuilder.group({
@@ -30,9 +25,6 @@ export class OrdersFormBuilderService {
     const ordersList = <FormArray>customerRegistrationForm.get('customerOrders');
     return ordersList;
   };
-
-
-
 
 
 };

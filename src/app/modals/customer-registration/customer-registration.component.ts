@@ -1,15 +1,19 @@
+import { Customer, ICustomer } from './../../models/customer.model';
+import { CustomersStoreService } from './../../shared/customers-store.service';
+import { EditCustomerFormBuilderService } from './../services/edit-customer-form-builder.service';
 import { CUSTOMER_REGISTRATION } from './../../models/modal.model';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { SharedService } from './../../shared/shared.service';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit, AfterContentInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, ContentChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ModalDirective, ActiveDirective } from 'angular-bootstrap-md';
-import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ViewChildren } from '@angular/core';
 import { QueryList } from '@angular/core';
-import { FormBuilderService } from '../services/form-builder.service';
+import { CreateCustomerFormBuilderService } from '../services/create-customer-form-builder.service';
+
 
 @Component({
   selector: 'app-customer-registration',
@@ -17,9 +21,9 @@ import { FormBuilderService } from '../services/form-builder.service';
   styleUrls: ['./customer-registration.component.scss'],
 
 })
-export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
+export class CustomerRegistrationComponent implements OnInit, AfterViewInit, AfterContentInit {
 
-  // customerEditMode: boolean = false;
+  customerEditMode: boolean;
 
   subscription: Subscription;
 
@@ -33,40 +37,79 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
 
   ordersListCounter$: Subject<number> = new Subject();
 
-  constructor(public viewContainerRef: ViewContainerRef, private formBuilderService: FormBuilderService,
-    private formBuilder: FormBuilder, private ref: ChangeDetectorRef, private sharedService: SharedService) {
-
+  constructor(public viewContainerRef: ViewContainerRef, private formBuilderService: CreateCustomerFormBuilderService,
+    private editCustomerFormBuilderService: EditCustomerFormBuilderService, private ref: ChangeDetectorRef,
+    private sharedService: SharedService, private customersStoreService: CustomersStoreService) {
     this.customerRegistrationForm = this.formBuilderService.customer_RegistrationFormBuilder();
     this.orders_FormArray_List = this.formBuilderService.get_CustomerOrdersList(this.customerRegistrationForm);
-
   };
 
   ngOnInit() {
     this.customerRegistrationModalState$();
-    this.setCustomerEditData();
+    this.customerEditFormBuilder();
   };
 
   ngAfterViewInit(): void {
     this.formOrdersCounter$();
   };
 
-  setCustomerEditData() {
-    // this.customerRegistrationForm.controls.customerEmail.setValue('m@gmail.com');
-    const list = [{ product: 'zzzz' }, { product: 'sss' }];
-    const ordersList = <FormArray>this.customerRegistrationForm.get('customerOrders');
-    this.orders_FormArray_List.controls = [];
-    list.forEach((item, k) => {
-      this.orders_FormArray_List.push(this.formBuilderService.orders_FormGroupBuilder());
-      ordersList.controls[k]['controls'].product.setValue(item.product);
-      console.log(ordersList);
-    });
+  ngAfterContentInit(): void { };
+
+  submitForm() {
+    if (this.customerRegistrationForm.valid) {
+      if (this.customerEditMode) {
+        // EDIT CUSTOMER
+        this.updateCustomer();
+        this.customerRegistrationForm.reset({});
+        this.hideModal();
+      } else {
+        // REGISTER CUSTOMER
+        this.sharedService.customerCreator(this.customerRegistrationForm.value);
+        this.reset_form_mdbActive();
+      }
+    } else {
+      return;
+    };
   };
+
+  // ===== EDIT CUSTOMER FN ==== //
+
+  customerEditFormBuilder() {
+    if (this.customerEditMode) {
+      this.customerRegistrationForm = this.editCustomerFormBuilderService.customer_EditFormBuilder();
+      const customer = this.sharedService.getActiveCustomer();
+      this.customerRegistrationForm.controls['customerName'].setValue(customer.customerName);
+      this.customerRegistrationForm.controls['customerEmail'].setValue(customer.customerEmail);
+      this.customerRegistrationForm.controls['customerPhone'].setValue(customer.customerPhone);
+      this.ref.detectChanges();
+    }
+  };
+
+  updateCustomer() {
+    const activeCustomer = this.sharedService.getActiveCustomer();
+    const customer: ICustomer = {
+      customerID: activeCustomer.customerID,
+      customerName: this.customerRegistrationForm.controls['customerName'].value,
+      customerPhone: this.customerRegistrationForm.controls['customerPhone'].value,
+      customerEmail: this.customerRegistrationForm.controls['customerEmail'].value,
+      customerOrders: activeCustomer.customerOrders
+    };
+    const cust = new Customer(customer);
+    this.customersStoreService.update_CustomerDataStorage(cust);
+  };
+
+  deleteCustomer() {
+    const customer = <Customer>this.sharedService.getActiveCustomer();
+    this.customersStoreService.delete_Customer(customer);
+    this.hideModal();
+  };
+  // ===== EDIT CUSTOMER FN ==== //
+
+  // ===== REGISTER CUSTOMER FN ==== //
 
   addOrder() {
     this.ordersListCounter$.next(this.orders_FormArray_List.length);
     this.orders_FormArray_List.push(this.formBuilderService.orders_FormGroupBuilder());
-    console.log(this.orders_FormArray_List)
-    console.log(this.customerRegistrationForm)
   };
 
   removeOrder(orderIndex: number) {
@@ -85,44 +128,35 @@ export class CustomerRegistrationComponent implements OnInit, AfterViewInit {
     return 3;
   };
 
-  saveCustomer() {
-    if (this.customerRegistrationForm.valid) {
-
-      this.sharedService.customerCreator(this.customerRegistrationForm.value);
-      this.reset_form_mdbActive();
-
-    } else {
-      debugger;
-    };
-  };
-
   reset_form_mdbActive() {
-
-    // this.customerRegistrationForm = this.formBuilderService.registrationFormBuilder(this.customerEditMode);
     this.customerRegistrationForm = this.formBuilderService.customer_RegistrationFormBuilder();
     this.customerRegistrationForm.reset({});
     this.orders_FormArray_List = this.formBuilderService.get_CustomerOrdersList(this.customerRegistrationForm);
     this.ref.detectChanges();
     this.mdbActiveList.map(el => el.onBlur());
-
   };
+
+  // ===== REGISTER CUSTOMER FN ==== //
+
+  // ========= MODAL FN ========= //
 
   customerRegistrationModalState$() {
-    this.mdbModal.onHide.subscribe((state) => {
+    this.subscription = this.mdbModal.onHide.subscribe((state) => {
       this.sharedService.set_ModalState$({ isOpen: false, modalName: CUSTOMER_REGISTRATION })
     });
-    this.mdbModal.onShow.subscribe((state) => { });
   };
 
-  public hideModal() {
+  hideModal() {
     this.ref.detectChanges();
     this.mdbModal.hide();
   };
 
-  public showModal() {
+  showModal() {
     this.ref.detectChanges();
     this.mdbModal.show();
   };
+
+  // ========= MODAL FN ========= //
 
 
 

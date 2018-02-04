@@ -1,3 +1,4 @@
+import { CUSTOMER_EDIT_MODE } from './../models/modal.model';
 import { CustomersStoreService } from './../shared/customers-store.service';
 import { ICustomer, Customer } from './../models/customer.model';
 import { SharedService } from './../shared/shared.service';
@@ -5,6 +6,7 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
 import { Customer_Mock } from '../models/data/customers-list.mock';
 import { AfterViewInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
+import { IActiveModal } from '../models/modal.model';
 
 
 @Component({
@@ -25,37 +27,62 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
     private ref: ChangeDetectorRef) { };
 
   ngOnInit() {
-    this.customersData = this.customersStoreService.getStorage();
+    //this.customersData = this.customersStoreService.getStorage();
     this.loadRegisteredCustomers();
   };
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.ref.detach()
   };
 
   ngAfterViewInit(): void {
     this.customerRegistration$();
+    this.customerState$();
+    // this.customerDeleteState$();
   };
 
   loadRegisteredCustomers() {
-    this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(this.customersData)
-      (this.customersStoreService.set_CustomerList(this.customersData));
+    const customersData: any = this.customersStoreService.getStorage();
+    this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(customersData)
+      (this.customersStoreService.set_CustomerList(customersData));
+    // this.customersListContainer = this.customersStoreService.set_CustomerDataStorage(this.customersData)
+    //   (this.customersStoreService.set_CustomerList(this.customersData));
     console.log('this.customersListContainer: ', this.customersListContainer);
+  };
+
+  customerRegistration$() {
+    this.subscription = this.sharedService.customerRegistration$.subscribe((customer: Customer) => {
+      debugger;
+      this.addCustomerRegistration(customer);
+      this.customersListContainer.push(customer);
+      // this.ref.detectChanges();
+      this.ref.markForCheck();
+      console.log('this.customersListContainer: ', this.customersListContainer);
+      return customer;
+    });
   };
 
   addCustomerRegistration(customer: Customer) {
     this.customersStoreService.set_CustomerDataStorage(customer)(this.customersStoreService.set_Customer(customer));
   };
 
-  customerRegistration$() {
-    this.subscription = this.sharedService.customer$.subscribe((customer: Customer) => {
-      this.addCustomerRegistration(customer);
-      this.customersListContainer.push(customer);
+  customerState$() {
+    this.subscription = this.customersStoreService.customerStore$.subscribe((cust: Customer) => {
+      this.customersListContainer = <Array<Customer>>this.customersStoreService.getStorage();
+      // this.customersData = <Array<Customer>>this.customersStoreService.getStorage();
       this.ref.detectChanges();
-      console.log('this.customersListContainer: ', this.customersListContainer);
-      return customer;
+      debugger;
+      return cust;
     });
   };
+
+  editCustomerEventHandler(cust: Customer) {
+    const state: IActiveModal = { isOpen: true, modalName: CUSTOMER_EDIT_MODE };
+    this.sharedService.setActiveCustomer(cust);
+    this.sharedService.set_ModalState$(state);
+  };
+
 
 
 }

@@ -1,4 +1,4 @@
-<form [formGroup]="ordersRegistrationForm" (ngSubmit)="saveOrder()" mdbModal #fluid="mdb-modal" class="modal fade right"
+<form [formGroup]="ordersRegistrationForm" (ngSubmit)="submitForm()" mdbModal #fluid="mdb-modal" class="modal fade right"
   id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
   <section class="modal-dialog modal-full-height modal-right" role="document">
@@ -30,7 +30,8 @@
         <!-- ORDERS -->
 
         <div class="text-center">
-          <button [disabled]="!ordersList.valid || ordersList.length >= ordersListSize" (click)="addOrder()"
+          <!-- <button [disabled]="!ordersList.valid || ordersList.length >= ordersListSize" (click)="addOrder()" -->
+          <button [disabled]="ordersList.length >= ordersListSize" (click)="addOrder()"
             type="button" class="btn btn-deep-orange waves-light" mdbRippleRadius>Set Order</button>
         </div>
 

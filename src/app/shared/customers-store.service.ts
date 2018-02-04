@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { Customer, ICustomer } from './../models/customer.model';
 import { Injectable } from '@angular/core';
 
@@ -10,10 +11,11 @@ export class CustomersStoreService {
 
   customersKeyType = 'customerID:';
 
+  customerStore$: Subject<Customer> = new Subject();
+
   constructor() {
     this.getStorage();
   };
-
 
   setStorage() {
     this.customersMap.forEach((customer: ICustomer) => {
@@ -23,10 +25,11 @@ export class CustomersStoreService {
 
   getStorage(): Array<Customer> | Customer {
     const storageKeys = Object.keys(localStorage);
-    const list = storageKeys.filter((item, i) => item === `${this.customersKeyType}${i}`);
-    const customerList = list.map(item => JSON.parse(localStorage.getItem(item)));
-    return customerList;
-  }
+    const keyslist = storageKeys.map((key) => key.match(`${this.customersKeyType}`));
+    const matchdata = keyslist.filter(item => { if (item !== null) { return item.input } });
+    const customerlist = matchdata.map((item) => JSON.parse(localStorage.getItem(item.input)));
+    return customerlist;
+  };
 
   getCustomerByID(custID: number): any {
     return (list: Array<Customer>) => {
@@ -58,13 +61,31 @@ export class CustomersStoreService {
   set_Customer(cust: Customer): Customer {
     cust.customerID = this.setCustomerID();
     this.customersSet.add(new Customer(cust));
-    this.customersMap.set(this.setCustomerID(), new Customer(cust));
+    this.customersMap.set(cust.customerID, new Customer(cust));
     return cust;
   };
 
+  update_CustomerDataStorage(customer: Customer) {
+    localStorage.removeItem(`${this.customersKeyType}${customer.customerID}`);
+    localStorage.setItem(`${this.customersKeyType}${customer.customerID}`, JSON.stringify(customer));
+    this.customerStore$.next(customer);
+  };
+
   setCustomerID(): number {
-    const size = this.customersMap.size;
-    return size + 1;
+    if (this.customersMap.size === 0) {
+      return 1;
+    } else {
+      const keys = this.customersMap.keys();
+      const list = Array.from(keys);
+      const maxID = Math.max(...list);
+      return maxID + 1;
+    }
+  };
+
+  delete_Customer(customer: Customer) {
+    localStorage.removeItem(`${this.customersKeyType}${customer.customerID}`);
+    this.customersMap.delete(customer.customerID)
+    this.customerStore$.next(customer);
   };
 
 }

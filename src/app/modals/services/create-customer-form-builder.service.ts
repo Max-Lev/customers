@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class FormBuilderService {
+export class CreateCustomerFormBuilderService {
 
   constructor(private formBuilder: FormBuilder) { };
 
@@ -40,27 +40,5 @@ export class FormBuilderService {
     const ordersList = <FormArray>customerRegistrationForm.get('customerOrders');
     return ordersList;
   };
-
-
-
-
-
-
-
-
-
-  // set_OrdersMode(customerRegistrationForm: FormGroup, customerEditMode: boolean) {
-  //   if (!customerEditMode) {
-  //     customerRegistrationForm.get('customerName').disable();
-  //     customerRegistrationForm.get('customerName').clearValidators();
-  //     customerRegistrationForm.get('customerEmail').disable();
-  //     customerRegistrationForm.get('customerEmail').clearValidators();
-  //     customerRegistrationForm.get('customerPhone').disable();
-  //     customerRegistrationForm.get('customerPhone').clearValidators();
-  //   }
-  // };
-
-
-
 
 }

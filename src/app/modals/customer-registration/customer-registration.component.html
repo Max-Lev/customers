@@ -1,4 +1,4 @@
-<form [formGroup]="customerRegistrationForm" (ngSubmit)="saveCustomer()" mdbModal #fluid="mdb-modal" class="modal fade right"
+<form [formGroup]="customerRegistrationForm" (ngSubmit)="submitForm()" mdbModal #fluid="mdb-modal" class="modal fade right"
     id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <section class="modal-dialog modal-full-height modal-right" role="document">
@@ -40,34 +40,42 @@
                 <!-- PHONE -->
 
                 <!-- ORDERS -->
-                <!-- orders_FormArray_List!==null &&  -->
-                <!-- <ng-template *ngIf="orders_FormArray_List!==undefined"> -->
-                <section formArrayName="customerOrders" *ngFor="let order of orders_FormArray_List.controls;let i = index;">
-                    <section [formGroupName]="i">
-                        <div class="md-form form-sm">
-                            <i class="fa fa-product-hunt prefix"></i>
-                            <button (click)="removeOrder(i)" type="button" class="close remove-product" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <input formControlName="product" mdbActive autocomplete="false" type="text" id="" class="form-control">
-                            <label for="">Product</label>
-                        </div>
+                <section *ngIf="!customerEditMode">
+                    <section formArrayName="customerOrders" *ngFor="let order of orders_FormArray_List.controls;let i = index;">
+                        <section [formGroupName]="i">
+                            <div class="md-form form-sm">
+                                <i class="fa fa-product-hunt prefix"></i>
+                                <button (click)="removeOrder(i)" type="button" class="close remove-product" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <input formControlName="product" mdbActive autocomplete="false" type="text" id="" class="form-control">
+                                <label for="">Product</label>
+                            </div>
+                        </section>
                     </section>
                 </section>
-                <!-- </ng-template> -->
                 <!-- ORDERS -->
 
-                <div class="text-center">
+                <!-- ADD ORDERS BTN -->
+                <div *ngIf="!customerEditMode" class="text-center">
                     <button [disabled]="!orders_FormArray_List.valid || orders_FormArray_List.length >= ordersListSize" (click)="addOrder()"
                         type="button" class="btn btn-deep-orange waves-light" mdbRippleRadius>Set Order</button>
                 </div>
+                <!-- ADD ORDERS BTN -->
+
+                <!-- DELETE CUSTOMER BTN -->
+                <div *ngIf="customerEditMode" class="text-center">
+                    <button (click)="deleteCustomer()"
+                        type="button" class="btn btn-danger waves-light" mdbRippleRadius>Delete Customer</button>
+                </div>
+                <!-- DELETE CUSTOMER BTN -->
 
             </section>
             <!-- BODY -->
 
             <div class="modal-footer ml-auto mr-auto">
-                <button (click)="hideModal()" type="button" class="btn btn-primary red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>
-                <button [disabled]="!customerRegistrationForm.valid" type="submit" class="btn btn-primary amber darken-4 relative waves-light"
+                <button (click)="hideModal()" type="button" class="btn red accent-3 waves-light" aria-label="Close" mdbRippleRadius>Close</button>
+                <button [disabled]="!customerRegistrationForm.valid" type="submit" class="btn amber darken-4 relative waves-light"
                     mdbRippleRadius>Save changes</button>
             </div>
 

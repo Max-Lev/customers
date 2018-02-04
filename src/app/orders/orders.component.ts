@@ -1,8 +1,9 @@
+import { Subscription } from 'rxjs/Subscription';
 import { IActiveModal, ORDERS_REGISTRATION } from './../models/modal.model';
 import { ICustomer, Order, Customer } from './../models/customer.model';
 import { CustomersStoreService } from './../shared/customers-store.service';
 import { SharedService } from './../shared/shared.service';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,10 +13,10 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit, AfterViewInit {
+export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // customerOrdersForm: FormGroup;
-  // ordersList: FormArray;
+  subscription: Subscription;
+
   selectedCustomer: ICustomer;
 
   customerOrders: Array<Order> = [];
@@ -28,26 +29,32 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.getOrderData();
   };
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  };
+
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.edit();
-    }, 500);
+    this.ordersState$();
   };
 
   getOrderData() {
     const customerID = this.activatedRoute.children[0].snapshot.params;
     this.selectedCustomer = this.customersStoreService.getCustomerByID(+customerID.id)(this.customersStoreService.getStorage());
-    console.log('selectedCustomer: ', this.selectedCustomer);
     this.customerOrders = this.selectedCustomer.customerOrders;
     this.sharedService.setActiveCustomer(this.selectedCustomer);
+  };
+
+  ordersState$() {
+    this.subscription = this.customersStoreService.customerStore$.subscribe((cust: Customer) => {
+      this.customerOrders = cust.customerOrders;
+      return cust;
+    });
   };
 
   edit() {
     const activeComponent: IActiveModal = { isOpen: true, modalName: ORDERS_REGISTRATION };
     this.sharedService.set_ModalState$(activeComponent);
   };
-
-
 
 
 }

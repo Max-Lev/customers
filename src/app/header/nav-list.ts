@@ -4,8 +4,5 @@ export interface NavList {
 export const navList: NavList[] = [
     {
         route: 'Customers'
-    },
-    {
-        route: 'Orders'
     }
 ];

@@ -12,12 +12,11 @@ export class SharedService {
 
   customerModalAction: IActiveModal = { isOpen: false, modalName: CUSTOMER_REGISTRATION };
 
-
   customerModalState$: BehaviorSubject<IActiveModal> = new BehaviorSubject<IActiveModal>(this.customerModalAction);
 
   customer: Subject<any> = new Subject();
 
-  customer$ = this.customer.asObservable();
+  customerRegistration$ = this.customer.asObservable();
 
   activeCustomer: ICustomer;
 
