@@ -71,6 +71,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
     const state: IActiveModal = { isOpen: true, modalName: CUSTOMER_EDIT_MODE };
     this.sharedService.setActiveCustomer(cust);
     this.sharedService.set_ModalState$(state);
+    this.sharedService.autoCloseNav$();
   };
 
   addCustomer() {

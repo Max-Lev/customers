@@ -20,12 +20,24 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() { };
 
-  ngAfterViewInit(): void { };
+  ngAfterViewInit(): void {
+    this.autoCloseNav$();
+  };
 
   openCustomerRegistrationForm() {
     const activeComponent: IActiveModal = { isOpen: true, modalName: CUSTOMER_REGISTRATION };
     this.sharedService.set_ModalState$(activeComponent);
-    this.mdbNavBar.hide();
+    if (this.mdbNavBar.shown) {
+      this.mdbNavBar.hide();
+    }
+  };
+
+  autoCloseNav$() {
+    this.sharedService.autoCloseNav$().subscribe((navState) => {
+      if (this.mdbNavBar.shown) {
+        this.mdbNavBar.hide();
+      }
+    });
   };
 
 }

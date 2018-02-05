@@ -27,6 +27,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.getOrderData();
+    this.sharedService.autoCloseNav$();
   };
 
   ngOnDestroy(): void {
@@ -62,6 +63,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   edit() {
     const activeComponent: IActiveModal = { isOpen: true, modalName: ORDERS_REGISTRATION };
     this.sharedService.set_ModalState$(activeComponent);
+    this.sharedService.autoCloseNav$();
   };
 
 

@@ -20,6 +20,8 @@ export class SharedService {
 
   activeCustomer: ICustomer;
 
+  navClose$: Subject<boolean> = new Subject();
+
   constructor() { };
 
   set_ModalState$(state: IActiveModal) {
@@ -41,5 +43,9 @@ export class SharedService {
     return this.activeCustomer;
   };
 
+  autoCloseNav$(): Observable<boolean> {
+    this.navClose$.next(false);
+    return this.navClose$;
+  };
 
 }
