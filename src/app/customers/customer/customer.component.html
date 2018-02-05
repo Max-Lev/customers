@@ -8,7 +8,8 @@
     <!--Title-->
     <h4 [innerText]="customer.customerName" class="card-title"></h4>
     <!--Text-->
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <p class="card-text" [innerText]="customer.customerEmail"></p>
+    <p class="card-text" [innerText]="customer.customerPhone"></p>
     <button (click)="editCustomer(customer)" class="btn btn-primary waves-light" mdbRippleRadius>Edit Customer</button>
     <a [routerLink]="['/Orders',customer.customerID]" class="btn btn-primary waves-light orders" mdbRippleRadius>Orders
       <app-badge [customerOrdersCounter]="customer"></app-badge>
